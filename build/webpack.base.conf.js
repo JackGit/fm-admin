@@ -31,6 +31,7 @@ module.exports = {
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
+        exclude: /\.min\.js$/,
         options: {
           formatter: require('eslint-friendly-formatter')
         }
