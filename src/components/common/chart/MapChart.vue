@@ -12,31 +12,31 @@ function createMapChart (el) {
       text: ''
     },
     legend: {
-      layout: 'horizontal',
+      layout: 'vertical',
       borderWidth: 0,
-      backgroundColor: 'rgba(255,255,255,0.85)',
-      floating: true,
-      verticalAlign: 'top',
-      y: 25
+      backgroundColor: 'rgba(0,0,0,0.3)',
+      align: 'left',
+      verticalAlign: 'bottom',
+      floating: true
+    },
+    mapNavigation: {
+      enabled: true
     },
     colorAxis: {
-      min: 1,
-      type: 'logarithmic',
-      minColor: '#EEEEFF',
-      maxColor: '#000022',
-      stops: [
-        [0, '#EFEFFF'],
-        [0.67, '#4444FF'],
-        [1, '#000022']
-      ]
+      type: 'logarithmic'
     },
     series: [{
       animation: {
         duration: 500
       },
-      data: [],
+      data: ChinaMapData.features.map(
+        (feature, index) => ({
+          key: feature.properties['hc-key'],
+          value: Math.random() * 10
+        })
+      ),
       mapData: ChinaMapData,
-      joinBy: ['postal-code', 'code'],
+      joinBy: ['hc-key', 'key'],
       dataLabels: {
         enabled: true,
         color: '#FFFFFF',
@@ -44,7 +44,7 @@ function createMapChart (el) {
       },
       name: 'Population density',
       tooltip: {
-        pointFormat: '{point.code}: {point.value}/km²'
+        pointFormat: '{point.key}: {point.value}/km²'
       }
     }]
   })
