@@ -2,20 +2,20 @@
   <view-page>
     <h1 class="l-nomargin" slot="header">Exception</h1>
     <toolbar slot="toolbar"></toolbar>
-    <exception-view-body slot="body"></exception-view-body>
+    <view-body slot="body"></view-body>
   </view-page>
 </template>
 
 <script>
 import ViewPage from '@/components/common/view/Page'
 import Toolbar from '@/components/common/Toolbar'
-import ExceptionViewBody from '@/components/exception/overall/ViewBody'
+import ViewBody from '@/components/exception/overall/ViewBody'
 
 export default {
   components: {
     ViewPage,
     Toolbar,
-    ExceptionViewBody
+    ViewBody
   }
 }
 </script>

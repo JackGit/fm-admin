@@ -1,7 +1,21 @@
 <template>
-  <div>page</div>
+  <view-page>
+    <h1 class="l-nomargin" slot="header">Page</h1>
+    <toolbar slot="toolbar"></toolbar>
+    <view-body slot="body"></view-body>
+  </view-page>
 </template>
 
 <script>
-export default {}
+import ViewPage from '@/components/common/view/Page'
+import Toolbar from '@/components/common/Toolbar'
+import ViewBody from '@/components/page/ViewBody'
+
+export default {
+  components: {
+    ViewPage,
+    Toolbar,
+    ViewBody
+  }
+}
 </script>
