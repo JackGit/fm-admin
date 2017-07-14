@@ -6,6 +6,7 @@ import Page from '@/views/dashboard/Page'
 import Visit from '@/views/dashboard/Visit'
 import Ajax from '@/views/dashboard/Ajax'
 import Exception from '@/views/dashboard/Exception'
+import ExceptionDetails from '@/views/dashboard/ExceptionDetails'
 
 Vue.use(Router)
 
@@ -34,6 +35,10 @@ export default new Router({
       path: 'exception',
       name: 'Exception',
       component: Exception
+    }, {
+      path: 'exceptionDetails',
+      name: 'ExceptionDetails',
+      component: ExceptionDetails
     }]
   }]
 })

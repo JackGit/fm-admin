@@ -17,11 +17,17 @@ export default {
   data () {
     return {
       pieChartData: [{
-        name: 'ie',
+        name: 'Syntax',
         value: 60
       }, {
-        name: 'chrome',
+        name: 'Reference',
         value: 62
+      }, {
+        name: 'Promise',
+        value: 10
+      }, {
+        name: 'Unknown',
+        value: 23
       }]
     }
   }

@@ -2,6 +2,51 @@
 
 }
 
+.c-exceptionListBlock {
+
+}
+
 .c-exceptionList {
+  margin: -21px;
+}
+.c-exceptionListItem {
+  position: relative;
+  box-sizing: border-box;
+  padding: 12px 10px 5px 40px;
+  margin-top: -1px;
+  border: 1px solid lightgrey;
+}
+.c-exceptionListItem__icon {
+  position: absolute;
+  top: 14px;
+  left: 13px;
+}
+.c-exceptionListItem__type {
+  font-size: 16px;
+  font-weight: bold;
+  color: #324057;
+}
+.c-exceptionListItem__url {
+  font-size: 14px;
+  margin-left: 6px;
+  color: #475669;
+}
+.c-exceptionListItem__filename {
+  font-size: 13px;
+  font-weight: bold;
+  color: #324057;
+}
+.c-exceptionListItem__desc {
+  margin-left: 4px;
+  font-size: 13px;
+  color: #475669;
+}
+.c-exceptionListItem__time {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #8492A6;
+}
+.c-exceptionList__pagination {
+  margin-top: 40px;
   text-align: center;
 }

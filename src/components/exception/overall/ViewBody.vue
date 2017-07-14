@@ -1,5 +1,5 @@
 <template>
-  <div class="c-execption">
+  <div class="c-execptionOverall">
     <type-pie-chart></type-pie-chart>
     <amount-line-chart></amount-line-chart>
     <exception-list></exception-list>
