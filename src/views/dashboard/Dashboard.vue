@@ -4,7 +4,7 @@
       <el-col :span="3">
         <side-bar></side-bar>
       </el-col>
-      <el-col :span="21">
+      <el-col :span="21" class="c-dashboard__viewContainer">
         <router-view></router-view>
       </el-col>
     </el-row>

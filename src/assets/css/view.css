@@ -1,21 +1,52 @@
 .c-view {
   position: relative;
   width: 100%;
-  height: 100vh;
+  overflow-y: auto;
+}
+
+.c-view header {
+  background-color: #D3DCE6;
 }
 
 .c-view__header {
+  position: relative;
   width: 100%;
   padding: 18px 20px;
   box-shadow: 0px 1px 2px rgba(0,0,0,.2);
   box-sizing: border-box;
   font-weight: bold;
+  background-color: #fff;
 }
 
-.c-view__toolbar {
-
-}
+.c-view__toolbar {}
 
 .c-view__body {
+  position: relative;
+  padding: 20px 30px;
+}
+
+
+.c-viewBlock {
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+  box-sizing: border-box;
+  min-width: 460px;
+  min-height: 200px;
+}
+.c-viewBlock--block {
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 200px;
+}
+.c-viewBlock__title {
+  text-align: left;
+  text-transform: uppercase;
+  color: #99A9BF;
+}
+.c-viewBlock__body {
 
 }

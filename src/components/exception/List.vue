@@ -1,15 +1,16 @@
 <template>
-  <el-card>
-    <div slot="header" class="clearfix">
-      <span style="line-height: 36px;">New This Week</span>
-      <el-button style="float: right;">Operation button</el-button>
-    </div>
-    <div v-for="o in 4" :key="o" class="text item">
-      {{'List item ' + o }}
-    </div>
-  </el-card>
+  <view-block title="list" class="c-exceptionList" :block="true" :card-body="true">
+    <div>this is list</div>
+    <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+  </view-block>
 </template>
 
 <script>
-export default {}
+import ViewBlock from '@/components/common/view/Block'
+
+export default {
+  components: {
+    ViewBlock
+  }
+}
 </script>
