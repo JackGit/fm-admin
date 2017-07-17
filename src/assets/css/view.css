@@ -33,7 +33,6 @@
   padding: 20px;
   box-sizing: border-box;
   min-width: 460px;
-  min-height: 200px;
 }
 .c-viewBlock--block {
   position: relative;
@@ -41,13 +40,31 @@
   padding: 20px;
   box-sizing: border-box;
   width: 100%;
-  min-height: 200px;
 }
 .c-viewBlock__title {
+  margin-top: 0;
   text-align: left;
   text-transform: uppercase;
   color: #99A9BF;
 }
 .c-viewBlock__body {
 
+}
+
+.c-viewForm {
+  position: relative;
+  display: block;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.c-viewForm__title {
+  text-align: left;
+  text-transform: uppercase;
+  color: #8492A6;
+}
+.c-viewForm__value {
+  padding: 0 10px;
+  border-radius: 3px;
+  color: #2f2936;
+  background-color: #f7f8f9;
 }

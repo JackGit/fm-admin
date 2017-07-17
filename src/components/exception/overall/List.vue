@@ -6,7 +6,7 @@
         <i class="el-icon-warning c-exceptionListItem__icon" style="color: red"></i>
         <div>
           <span class="c-exceptionListItem__type">{{exception.type}}</span>
-          <span class="c-exceptionListItem__url">{{exception.url}}</span>
+          <span class="c-exceptionListItem__url c-url">{{exception.url}}</span>
         </div>
         <div>
           <span class="c-exceptionListItem__filename">{{exception.filename}}</span>

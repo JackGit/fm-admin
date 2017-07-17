@@ -27,3 +27,10 @@ html, body {
 .l-borderless {
   border: 0;
 }
+
+
+.c-url {
+  color: #4674ca;
+  font-family: Monaco, monospace;
+  word-wrap: break-word;
+}

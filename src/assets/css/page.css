@@ -1,0 +1,35 @@
+.c-page__tabs {
+  margin: -20px -30px;
+}
+
+
+.c-resourceList {
+  border-radius: 4px;
+}
+.c-resourceListItem {
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: -1px;
+  border: 1px solid lightgrey;
+}
+.c-resourceListItem.is-selected {
+  border-left: 4px solid #20a0ff;
+}
+.c-resourceListItem__name {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+  color: #324057;
+}
+.c-resourceListItem__size {
+  font-weight: 100;
+  font-size: 14px;
+  margin-left: 6px;
+  color: #475669;
+}
+.c-resourceListItem__url {
+  font-size: 13px;
+  color: #475669;
+  margin: 4px 0 0 0;
+}

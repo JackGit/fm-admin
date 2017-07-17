@@ -1,0 +1,20 @@
+.c-ajaxList {
+
+}
+.c-ajaxList__pagination {
+  margin: 20px;
+  text-align: center;
+}
+
+.c-ajaxListItem {
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid lightgrey;
+  margin-top: -1px;
+}
+.c-ajaxListItem.is-selected {
+  border-left: 4px solid #20a0ff;
+}
+.c-ajaxListItem__method {
+  margin: 0 5px;
+}
