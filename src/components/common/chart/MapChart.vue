@@ -4,7 +4,7 @@
 
 <script>
 import Highcharts from 'highcharts/highmaps'
-import ChinaMapData from '@/assets/js/cn.map.min'
+import ChinaMapData from '@/assets/js/china.cities.map.min'
 
 function createMapChart (el) {
   Highcharts.mapChart(el, {
@@ -31,12 +31,12 @@ function createMapChart (el) {
       },
       data: ChinaMapData.features.map(
         (feature, index) => ({
-          key: feature.properties['hc-key'],
+          key: feature.properties['name'],
           value: Math.random() * 10
         })
       ),
       mapData: ChinaMapData,
-      joinBy: ['hc-key', 'key'],
+      joinBy: ['name', 'key'],
       dataLabels: {
         enabled: true,
         color: '#FFFFFF',
