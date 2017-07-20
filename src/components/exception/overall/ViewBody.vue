@@ -1,8 +1,11 @@
 <template>
   <div class="c-execptionOverall">
-    <type-pie-chart></type-pie-chart>
-    <amount-line-chart></amount-line-chart>
-    <exception-list></exception-list>
+    <template v-if="exceptionList.length > 0">
+      <type-pie-chart :exceptions="exceptionList"></type-pie-chart>
+      <amount-line-chart :exceptions="exceptionList" :time-start="timeStart" :time-end="timeEnd"></amount-line-chart>
+      <exception-list :exceptions="exceptionList"></exception-list>
+    </template>
+    <p v-else>No exceptions, great job!</p>
   </div>
 </template>
 
@@ -17,6 +20,15 @@ export default {
     TypePieChart,
     AmountLineChart,
     ExceptionList
+  },
+
+  props: {
+    exceptionList: {
+      type: Array,
+      default: () => []
+    },
+    timeStart: Date,
+    timeEnd: Date
   }
 }
 </script>

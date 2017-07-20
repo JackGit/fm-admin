@@ -1,12 +1,14 @@
 <template>
   <view-block title="AMOUNT" :card-body="true">
-    <line-chart :series-data="barSeriesData" :time-interval="timeInterval" :time-start="timeStart" style="height:300px;width:400px;"></line-chart>
+    <line-chart :series-data="seriesData" :time-interval="interval" :time-start="timeStart" style="height:300px;width:800px;"></line-chart>
   </view-block>
 </template>
 
 <script>
 import ViewBlock from '@/components/common/view/Block'
 import LineChart from '@/components/common/chart/LineChart'
+import { groupByTimeInterval } from '@/utils/group'
+import { TODAY, YESTERDAY, HOUR } from '@/constants/time'
 
 export default {
   components: {
@@ -14,13 +16,48 @@ export default {
     LineChart
   },
 
+  props: {
+    exceptions: {
+      type: Array,
+      default: () => []
+    },
+    timeStart: {
+      type: Date,
+      default: () => YESTERDAY
+    },
+    timeEnd: {
+      type: Date,
+      default: () => TODAY
+    },
+    interval: {
+      type: Number,
+      default: HOUR
+    }
+  },
+
   data () {
     return {
-      timeInterval: 1000 * 60 * 60 * 2,
-      timeStart: new Date(),
-      barSeriesData: [{
-        name: 'pop',
-        data: [23.7, 16.1, 14.2, 14.0, 12.5, 12.1, 11.8, 11.7, 11.1, 11.1, 10.5, 10.4]
+      seriesData: []
+    }
+  },
+
+  watch: {
+    exceptions () {
+      this.updateSeriesData()
+    }
+  },
+
+  mounted () {
+    this.updateSeriesData()
+  },
+
+  methods: {
+    updateSeriesData () {
+      const { exceptions, timeStart, timeEnd, interval } = this
+      const group = groupByTimeInterval(exceptions, 'createdAt', timeStart, timeEnd, interval)
+      this.seriesData = [{
+        name: 'Frequency',
+        data: group.map(subGroup => subGroup.length)
       }]
     }
   }

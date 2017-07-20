@@ -32,11 +32,11 @@ export default new Router({
       name: 'Ajax',
       component: Ajax
     }, {
-      path: 'exception',
-      name: 'Exception',
+      path: 'exceptions',
+      name: 'Exceptions',
       component: Exception
     }, {
-      path: 'exceptionDetails',
+      path: 'exceptions/:exceptionId',
       name: 'ExceptionDetails',
       component: ExceptionDetails
     }]

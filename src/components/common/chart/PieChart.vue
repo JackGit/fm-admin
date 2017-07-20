@@ -54,8 +54,20 @@ export default {
     }
   },
 
+  watch: {
+    chartData () {
+      this.updateChart()
+    }
+  },
+
   mounted () {
-    createPieChart(this.$el, this.chartData)
+    this.updateChart()
+  },
+
+  methods: {
+    updateChart () {
+      createPieChart(this.$el, this.chartData)
+    }
   }
 }
 </script>

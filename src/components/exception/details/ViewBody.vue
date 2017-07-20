@@ -2,11 +2,12 @@
   <div class="c-execptionDetails">
     <el-row>
       <el-col :span="18">
-        <view-form title="Exception" :form-data="exception"></view-form>
-        <view-form title="Headers" :form-data="headers"></view-form>
-        <view-form title="User" :form-data="user"></view-form>
-        <view-form title="Operation System" :form-data="OS"></view-form>
-        <view-form title="Browser" :form-data="browser"></view-form>
+        <view-form :form-data="[{ label: 'ID', value: exceptionDetails.objectId }]"></view-form>
+        <view-form title="Exception" :form-data="exceptionForm"></view-form>
+        <view-form title="Headers" :form-data="headersForm"></view-form>
+        <view-form title="User" :form-data="userForm"></view-form>
+        <view-form title="Operation System" :form-data="osForm"></view-form>
+        <view-form title="Browser" :form-data="browserForm"></view-form>
       </el-col>
       <el-col :span="6" style="padding: 10px">
         <p>LAST 24 HOURS</p>
@@ -22,58 +23,77 @@
 import '@/assets/css/exception-details.css'
 import ViewForm from '@/components/common/view/Form'
 import BarChart from '@/components/common/chart/BarChart'
+import { timeFormat } from '@/utils/filters'
 
 export default {
   components: {
     ViewForm,
     BarChart
   },
-  data () {
-    return {
-      exception: [{
-        label: 'URL',
+
+  props: {
+    exceptionDetails: {
+      type: Object,
+      default: () => {}
+    }
+  },
+
+  computed: {
+    exceptionForm () {
+      const { pageUrl, name, message, stack, createdAt } = this.exceptionDetails
+
+      return [{
+        label: 'Page URL',
         type: 'URL',
-        value: 'http://bloc.jackyang.me'
+        value: pageUrl
       }, {
         label: 'File Name',
-        value: 'blog.js'
+        type: 'URL',
+        value: stack.length > 0 && stack[stack.length - 1].url
       }, {
         label: 'Type',
-        value: 'Reference Error'
+        value: name
       }, {
         label: 'Description',
-        value: 'unexpected token }'
+        value: message
       }, {
         label: 'Stack',
-        value: 'N/A'
+        value: stack.length > 0 && stack.map(frame => `${frame.url}, line: ${frame.line}, column: ${frame.column || '?'}, function: ${frame.func}`).join('\n\r')
       }, {
         label: 'Created At',
-        value: '2017/07/17 11:32:22'
-      }],
-      headers: [{
+        value: timeFormat(createdAt)
+      }]
+    },
+    headersForm () {
+      return [{
         label: 'User-Agent',
-        value: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-      }],
-      user: [{
+        value: this.exceptionDetails.userAgent
+      }]
+    },
+    userForm () {
+      return [{
         label: 'IP',
-        value: '192.168.1.103'
-      }],
-      OS: [{
+        value: this.exceptionDetails.ip
+      }]
+    },
+    osForm () {
+      const os = this.exceptionDetails.os
+      return [{
         label: 'Name',
-        value: 'Windows'
+        value: os.name
       }, {
         label: 'Version',
-        value: '10'
-      }, {
-        label: 'Kernel Version',
-        value: 'N/A'
-      }],
-      browser: [{
+        value: os.version
+      }]
+    },
+    browserForm () {
+      const browser = this.exceptionDetails.browser
+      return [{
         label: 'Name',
-        value: 'Chrome'
+        value: browser.name
       }, {
         label: 'Version',
-        value: '58.4'
+        value: browser.version
       }]
     }
   }

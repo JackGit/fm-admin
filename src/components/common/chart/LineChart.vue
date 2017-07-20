@@ -4,6 +4,7 @@
 
 <script>
 import Highcharts from 'highcharts'
+import { toUTCDate } from '@/utils/date'
 
 /**
  * @param  {HTMLElement} el   [description]
@@ -39,7 +40,7 @@ function createLineChart (el, { tooltipFormat, seriesData, timeInterval, timeSta
       areaspline: {
         fillOpacity: 0.5,
         pointInterval: timeInterval,
-        pointStart: timeStart.getTime()
+        pointStart: toUTCDate(timeStart).getTime()
       }
     },
     series: seriesData
@@ -66,13 +67,25 @@ export default {
     }
   },
 
+  watch: {
+    seriesData () {
+      this.updateChart()
+    }
+  },
+
   mounted () {
-    createLineChart(this.$el, {
-      tooltipFormat: this.tooltipFormat,
-      seriesData: this.seriesData,
-      timeInterval: this.timeInterval,
-      timeStart: this.timeStart
-    })
+    this.updateChart()
+  },
+
+  methods: {
+    updateChart () {
+      createLineChart(this.$el, {
+        tooltipFormat: this.tooltipFormat,
+        seriesData: this.seriesData,
+        timeInterval: this.timeInterval,
+        timeStart: this.timeStart
+      })
+    }
   }
 }
 </script>

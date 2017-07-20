@@ -14,21 +14,25 @@ export default {
     PieChart
   },
 
-  data () {
-    return {
-      pieChartData: [{
-        name: 'Syntax',
-        value: 60
-      }, {
-        name: 'Reference',
-        value: 62
-      }, {
-        name: 'Promise',
-        value: 10
-      }, {
-        name: 'Unknown',
-        value: 23
-      }]
+  props: {
+    exceptions: {
+      type: Array,
+      default: () => []
+    }
+  },
+
+  computed: {
+    pieChartData () {
+      const types = {}
+      this.exceptions.forEach(exception => {
+        let name = exception.name || 'Other'
+        if (types[name]) {
+          ++types[name]
+        } else {
+          types[name] = 1
+        }
+      })
+      return Object.keys(types).map(key => ({ name: key, value: types[key] }))
     }
   }
 }

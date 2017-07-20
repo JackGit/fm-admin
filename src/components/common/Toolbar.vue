@@ -1,12 +1,8 @@
 <template>
   <div class="c-toolbar">
-    <el-date-picker
-      v-model="range"
-      type="datetimerange"
-      placeholder="Select time range">
+    <el-date-picker v-model="localRange" type="datetimerange" placeholder="Select time range" @change="handleChange">
     </el-date-picker>
-
-    <el-button type="primary" icon="search">Search</el-button>
+    <el-button type="primary" icon="search" @click="handleClickSearch">Search</el-button>
   </div>
 </template>
 
@@ -18,6 +14,29 @@ export default {
     range: {
       type: Array,
       default: () => []
+    }
+  },
+
+  data () {
+    return {
+      localRange: Array.prototype.slice.call(this.range, 0)
+    }
+  },
+
+  watch: {
+    range (value) {
+      this.localRange = Array.prototype.slice.call(this.range, 0)
+    }
+  },
+
+  methods: {
+    handleChange () {
+      this.$emit('change', {
+        range: this.localRange
+      })
+    },
+    handleClickSearch () {
+      this.$emit('search')
     }
   }
 }
