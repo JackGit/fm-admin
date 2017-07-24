@@ -13,7 +13,8 @@ Vue.config.productionTip = false
 Vue.use({
   install (Vue) {
     Vue.prototype.$http = axios.create({
-      baseURL: 'http://yotta-tech.cn:4141',
+      // baseURL: 'http://yotta-tech.cn:4141',
+      baseURL: 'http://localhost:4141',
       timeout: 2000
     })
   }
