@@ -12,6 +12,9 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
+    path: '/',
+    redirect: '/dashboard/visit'
+  }, {
     path: '/login',
     name: 'Login',
     component: Login
