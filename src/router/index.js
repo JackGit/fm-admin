@@ -5,6 +5,7 @@ import Dashboard from '@/views/dashboard/Dashboard'
 import Page from '@/views/dashboard/Page'
 import Visit from '@/views/dashboard/Visit'
 import Ajax from '@/views/dashboard/Ajax'
+import AjaxDetails from '@/views/dashboard/AjaxDetails'
 import Exception from '@/views/dashboard/Exception'
 import ExceptionDetails from '@/views/dashboard/ExceptionDetails'
 
@@ -34,6 +35,10 @@ export default new Router({
       path: 'ajax',
       name: 'Ajax',
       component: Ajax
+    }, {
+      path: 'ajax/:ajaxId',
+      name: 'AjaxDetails',
+      component: AjaxDetails
     }, {
       path: 'exceptions',
       name: 'Exceptions',

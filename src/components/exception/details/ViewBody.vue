@@ -58,7 +58,8 @@ export default {
         value: message
       }, {
         label: 'Stack',
-        value: stack.length > 0 && stack.map(frame => `${frame.url}, line: ${frame.line}, column: ${frame.column || '?'}, function: ${frame.func}`).join('\n\r')
+        type: 'LIST',
+        value: stack.map(frame => `${frame.url}, line: ${frame.line || '?'}, column: ${frame.column || '?'}, function: ${frame.func}`)
       }, {
         label: 'Created At',
         value: timeFormat(createdAt)

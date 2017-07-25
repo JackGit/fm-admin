@@ -23,10 +23,7 @@ export default {
   },
 
   props: {
-    exceptionList: {
-      type: Array,
-      default: () => []
-    },
+    exceptionList: Array,
     timeStart: Date,
     timeEnd: Date
   }

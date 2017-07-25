@@ -37,3 +37,15 @@ export function groupByTimeInterval (collection, timeKey, timeStart, timeEnd, in
 
   return group
 }
+
+export function groupByType (collection, prop) {
+  const map = {}
+  collection.forEach(item => {
+    let t = item[prop]
+    if (!map[t]) {
+      map[t] = []
+    }
+    map[t].push(item)
+  })
+  return Object.values(map)
+}

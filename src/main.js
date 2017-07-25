@@ -13,23 +13,38 @@ Vue.config.productionTip = false
 Vue.use({
   install (Vue) {
     const axiosInstance = axios.create({
-      baseURL: 'http://yotta-tech.cn:4141',
-      // baseURL: 'http://localhost:4141',
+      // baseURL: 'http://yotta-tech.cn:4141',
+      baseURL: 'http://localhost:4141',
       timeout: 2000
     })
+
     Vue.prototype.$http = {
       get () {
         const { Loading, Message } = ElementUI
-        const loading = Loading.service({ fullscreen: true })
+        const options = arguments[0]
+        let args
+        let enableLoading = true
+        let loading
 
-        return axiosInstance.get.apply(axiosInstance, arguments)
+        if (typeof options === 'string') {
+          args = arguments
+        } else {
+          args = Array.prototype.slice.call(arguments, 1)
+          enableLoading = options.enableLoading
+        }
+
+        if (enableLoading) {
+          loading = Loading.service({ fullscreen: true })
+        }
+
+        return axiosInstance.get.apply(axiosInstance, args)
           .then(response => {
-            loading.close()
+            enableLoading && loading.close()
             return response
           })
           .catch(error => {
             Message.error(error.message)
-            loading.close()
+            enableLoading && loading.close()
             throw error
           })
       }

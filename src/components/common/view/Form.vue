@@ -3,7 +3,11 @@
     <h4 v-if="title" class="c-viewForm__title">{{title}}</h4>
     <el-form :label-position="labelPosition" :label-width="labelWidth">
       <el-form-item v-for="item in formData" :label="item.label" :key="item.label">
-        <div :class="{'c-viewForm__value': true, 'c-url': item.type === 'URL'}">{{item.value || 'N/A'}}</div>
+        <div v-if="item.type === 'URL'" class="c-viewForm__value c-url">{{item.value || 'N/A'}}</div>
+        <div v-else-if="item.type === 'LIST'" class="c-viewForm__value">
+          <p v-for="v in item.value" class="v-viewFormValue__listItem">{{v}}</p>
+        </div>
+        <div v-else class="c-viewForm__value">{{item.value || 'N/A'}}</div>
       </el-form-item>
     </el-form>
   </div>

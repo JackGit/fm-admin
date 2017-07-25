@@ -12,9 +12,6 @@
   border: 1px solid lightgrey;
   margin-top: -1px;
 }
-.c-ajaxListItem.is-selected {
-  border-left: 4px solid #20a0ff;
-}
 .c-ajaxListItem__method {
   margin: 0 5px;
 }

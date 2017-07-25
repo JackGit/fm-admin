@@ -68,3 +68,6 @@
   color: #2f2936;
   background-color: #f7f8f9;
 }
+.v-viewFormValue__listItem {
+  margin: 0;
+}

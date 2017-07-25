@@ -45,7 +45,7 @@ export default {
     fetchData () {
       const { $http, timeStart, timeEnd } = this
 
-      $http.get(`/exceptions`, {
+      $http.get('/exceptions', {
         params: {
           from: timeStart.getTime(),
           end: timeEnd.getTime()
