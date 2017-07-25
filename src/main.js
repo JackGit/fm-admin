@@ -12,11 +12,28 @@ Vue.config.productionTip = false
 // axios config
 Vue.use({
   install (Vue) {
-    Vue.prototype.$http = axios.create({
-      // baseURL: 'http://yotta-tech.cn:4141',
-      baseURL: 'http://localhost:4141',
+    const axiosInstance = axios.create({
+      baseURL: 'http://yotta-tech.cn:4141',
+      // baseURL: 'http://localhost:4141',
       timeout: 2000
     })
+    Vue.prototype.$http = {
+      get () {
+        const { Loading, Message } = ElementUI
+        const loading = Loading.service({ fullscreen: true })
+
+        return axiosInstance.get.apply(axiosInstance, arguments)
+          .then(response => {
+            loading.close()
+            return response
+          })
+          .catch(error => {
+            Message.error(error.message)
+            loading.close()
+            throw error
+          })
+      }
+    }
   }
 })
 
