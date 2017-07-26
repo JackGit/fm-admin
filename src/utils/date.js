@@ -8,3 +8,11 @@ export function toUTC (date) {
 export function toUTCDate (date) {
   return new Date(toUTC(date))
 }
+
+export function convertDateField (object) {
+  ['createdAt', 'updatedAt', 'startAt', 'endAt'].forEach(key => {
+    if (object[key]) {
+      object[key] = new Date(object[key])
+    }
+  })
+}

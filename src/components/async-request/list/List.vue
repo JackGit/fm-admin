@@ -1,6 +1,6 @@
 <template>
   <view-block title="List" :block="true" class="c-ajaxList">
-    <div v-for="item in ajaxList" class="c-ajaxListItem" @click="handleClick(item)">
+    <div v-for="item in asyncRequestList" class="c-ajaxListItem" @click="handleClick(item)">
       <el-row>
         <el-col :span="22"><span class="c-url">{{item.url}}</span></el-col>
         <el-col :span="2"><el-tag type="primary" class="c-ajaxListItem__method">{{item.method}}</el-tag></el-col>
@@ -18,12 +18,12 @@ export default {
   },
 
   props: {
-    ajaxList: Array
+    asyncRequestList: Array
   },
 
   methods: {
-    handleClick (ajaxItem) {
-      this.$emit('select', ajaxItem)
+    handleClick (item) {
+      this.$emit('select', item)
     }
   }
 }

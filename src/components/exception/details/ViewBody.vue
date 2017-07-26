@@ -24,6 +24,7 @@ import '@/assets/css/exception-details.css'
 import ViewForm from '@/components/common/view/Form'
 import BarChart from '@/components/common/chart/BarChart'
 import { timeFormat } from '@/utils/filters'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -31,14 +32,10 @@ export default {
     BarChart
   },
 
-  props: {
-    exceptionDetails: {
-      type: Object,
-      default: () => {}
-    }
-  },
-
   computed: {
+    ...mapState('exceptionDetailsPage', {
+      exceptionDetails: state => state.exceptionDetails
+    }),
     exceptionForm () {
       const { pageUrl, name, message, stack, createdAt } = this.exceptionDetails
 

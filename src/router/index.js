@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/Login'
-import Dashboard from '@/views/dashboard/Dashboard'
-import Page from '@/views/dashboard/Page'
-import Visit from '@/views/dashboard/Visit'
-import Ajax from '@/views/dashboard/Ajax'
-import AjaxDetails from '@/views/dashboard/AjaxDetails'
-import Exception from '@/views/dashboard/Exception'
-import ExceptionDetails from '@/views/dashboard/ExceptionDetails'
+import Login from '@/pages/Login'
+import Dashboard from '@/pages/dashboard/Dashboard'
+import Page from '@/pages/dashboard/Page'
+import Visit from '@/pages/dashboard/Visit'
+import AsyncRequestList from '@/pages/dashboard/AsyncRequestList'
+import AsyncRequestDetails from '@/pages/dashboard/AsyncRequestDetails'
+import ExceptionList from '@/pages/dashboard/ExceptionList'
+import ExceptionDetails from '@/pages/dashboard/ExceptionDetails'
 
 Vue.use(Router)
 
@@ -32,17 +32,17 @@ export default new Router({
       name: 'Visit',
       component: Visit
     }, {
-      path: 'ajax',
-      name: 'Ajax',
-      component: Ajax
+      path: 'async-request',
+      name: 'AsyncRequestList',
+      component: AsyncRequestList
     }, {
-      path: 'ajax/:ajaxId',
-      name: 'AjaxDetails',
-      component: AjaxDetails
+      path: 'async-request/:asyncRequestId',
+      name: 'AsyncRequestDetails',
+      component: AsyncRequestDetails
     }, {
       path: 'exceptions',
-      name: 'Exceptions',
-      component: Exception
+      name: 'ExceptionList',
+      component: ExceptionList
     }, {
       path: 'exceptions/:exceptionId',
       name: 'ExceptionDetails',

@@ -1,6 +1,6 @@
 <template>
   <div class="c-ajaxDetails">
-    <el-row v-if="ajaxList.length > 0 && ajaxDetails">
+    <el-row v-if="asyncRequestList.length > 0 && asyncRequestDetails">
       <view-form :block="true" :form-data="formData" style="padding:20px"></view-form>
       <frequency-line-chart :series-data="amountLineSeriesData"
                          :time-start="timeStart"
@@ -21,6 +21,7 @@ import FrequencyLineChart from './FrequencyLineChart'
 import ResponseTimeLineChart from './ResponseTimeLineChart'
 import StatusCodePieChart from './StatusCodePieChart'
 import ViewForm from '@/components/common/view/Form'
+import { mapState } from 'vuex'
 import { TODAY, YESTERDAY, HOUR } from '@/constants/time'
 import { timeFormat } from '@/utils/filters'
 import { groupByTimeInterval, groupByType } from '@/utils/group'
@@ -33,11 +34,6 @@ export default {
     ViewForm
   },
 
-  props: {
-    ajaxDetails: Object,
-    ajaxList: Array
-  },
-
   data () {
     return {
       timeStart: YESTERDAY,
@@ -47,36 +43,40 @@ export default {
   },
 
   computed: {
+    ...mapState('asyncRequestDetailsPage', {
+      asyncRequestDetails: state => state.asyncRequestDetails,
+      asyncRequestList: state => state.last24HoursAsyncRequestList
+    }),
     formData () {
-      const ajaxDetails = this.ajaxDetails || {}
+      const details = this.asyncRequestDetails || {}
       return [{
         label: 'Method',
-        value: ajaxDetails.method
+        value: details.method
       }, {
         label: 'URL',
         type: 'URL',
-        value: ajaxDetails.url
+        value: details.url
       }, {
         label: 'Page URL',
         type: 'URL',
-        value: ajaxDetails.fullUrl
+        value: details.fullUrl
       }, {
         label: 'Start At',
-        value: timeFormat(ajaxDetails.startAt)
+        value: timeFormat(details.startAt)
       }, {
         label: 'End At',
-        value: timeFormat(ajaxDetails.endAt)
+        value: timeFormat(details.endAt)
       }, {
         label: 'Duration',
-        value: ajaxDetails.duration + 'ms'
+        value: details.duration + 'ms'
       }, {
         label: 'Response Status',
-        value: ajaxDetails.status
+        value: details.status
       }]
     },
     groupData () {
-      const { ajaxList, timeStart, timeEnd, interval } = this
-      return groupByTimeInterval(ajaxList, 'startAt', timeStart, timeEnd, interval)
+      const { asyncRequestList, timeStart, timeEnd, interval } = this
+      return groupByTimeInterval(asyncRequestList, 'startAt', timeStart, timeEnd, interval)
     },
     amountLineSeriesData () {
       return [{
@@ -97,7 +97,7 @@ export default {
       }]
     },
     pieChartData () {
-      return groupByType(this.ajaxList, 'status').map(subGroup => ({
+      return groupByType(this.asyncRequestList, 'status').map(subGroup => ({
         name: subGroup[0].status,
         value: subGroup.length
       }))

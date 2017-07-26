@@ -1,13 +1,14 @@
 <template>
   <view-page>
     <h1 class="l-nomargin" slot="header">Exception Details</h1>
-    <view-body v-if="exceptionDetails" :exception-details="exceptionDetails" slot="body"></view-body>
+    <view-body slot="body"></view-body>
   </view-page>
 </template>
 
 <script>
 import ViewPage from '@/components/common/view/Page'
 import ViewBody from '@/components/exception/details/ViewBody'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -15,14 +16,12 @@ export default {
     ViewBody
   },
 
-  data () {
-    return {
-      exceptionDetails: null
-    }
-  },
-
   created () {
     this.fetchData()
+  },
+
+  destroyed () {
+    this.clearData()
   },
 
   watch: {
@@ -30,13 +29,12 @@ export default {
   },
 
   methods: {
+    ...mapActions('exceptionDetailsPage', [
+      'getDetails',
+      'clearData'
+    ]),
     fetchData () {
-      const { $http, $route } = this
-      $http.get(`/exceptions/${$route.params.exceptionId}`).then(({ data }) => {
-        data.createdAt = new Date(data.createdAt)
-        data.updatedAt = new Date(data.updatedAt)
-        this.exceptionDetails = data
-      })
+      this.getDetails(this.$route.params.exceptionId)
     }
   }
 }

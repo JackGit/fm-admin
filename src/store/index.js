@@ -1,26 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import asyncRequestListPage from './modules/async-request-list-page'
+import asyncRequestDetailsPage from './modules/async-request-details-page'
+import exceptionDetailsPage from './modules/exception-details-page'
+import exceptionListPage from './modules/exception-list-page'
 
 Vue.use(Vuex)
 
 export default window.store = new Vuex.Store({
-  state: {
-    login: {
-    },
-    dashboard: {
-      toolbar: {
-        timeStart: null,
-        timeEnd: null
-      },
-      asynRequest: {},
-      exception: {},
-      page: {},
-      visit: {}
-    }
-  },
-  mutations: {
-    increment (state) {
-      state.count++
-    }
+  modules: {
+    asyncRequestListPage,
+    asyncRequestDetailsPage,
+    exceptionDetailsPage,
+    exceptionListPage
   }
 })
