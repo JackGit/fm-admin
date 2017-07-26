@@ -19,12 +19,17 @@ import '@/assets/css/page.css'
 import VisitTab from './visit/Tab'
 import NavigationTab from './navigation/Tab'
 import ResourcesTab from './resources/Tab'
+// import { groupByTimeInterval } from '@/utils/group'
 
 export default {
   components: {
     VisitTab,
     NavigationTab,
     ResourcesTab
+  },
+
+  props: {
+    pageViewList: Array
   }
 }
 </script>

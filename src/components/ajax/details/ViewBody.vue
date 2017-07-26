@@ -2,32 +2,33 @@
   <div class="c-ajaxDetails">
     <el-row v-if="ajaxList.length > 0 && ajaxDetails">
       <view-form :block="true" :form-data="formData" style="padding:20px"></view-form>
-      <amount-line-chart :series-data="amountLineSeriesData"
+      <frequency-line-chart :series-data="amountLineSeriesData"
                          :time-start="timeStart"
                          :time-end="timeEnd"
-                         :interval="interval"></amount-line-chart>
+                         :interval="interval"></frequency-line-chart>
       <response-time-line-chart :series-data="responseTimeSeriesData"
                                 :time-start="timeStart"
                                 :time-end="timeEnd"
                                 :interval="interval"></response-time-line-chart>
-      <response-status-pie-chart :chart-data="pieChartData"></response-status-pie-chart>
+      <status-code-pie-chart :chart-data="pieChartData"></status-code-pie-chart>
     </el-row>
   </div>
 </template>
 
 <script>
 import '@/assets/css/ajax-details.css'
-import AmountLineChart from './AmountLineChart'
+import FrequencyLineChart from './FrequencyLineChart'
 import ResponseTimeLineChart from './ResponseTimeLineChart'
-import ResponseStatusPieChart from './ResponseStatusPieChart'
+import StatusCodePieChart from './StatusCodePieChart'
 import ViewForm from '@/components/common/view/Form'
+import { TODAY, YESTERDAY, HOUR } from '@/constants/time'
 import { timeFormat } from '@/utils/filters'
 import { groupByTimeInterval, groupByType } from '@/utils/group'
 
 export default {
   components: {
-    AmountLineChart,
-    ResponseStatusPieChart,
+    FrequencyLineChart,
+    StatusCodePieChart,
     ResponseTimeLineChart,
     ViewForm
   },
@@ -38,11 +39,10 @@ export default {
   },
 
   data () {
-    const $route = this.$route
     return {
-      timeStart: new Date(+$route.query.timeStart),
-      timeEnd: new Date(+$route.query.timeEnd),
-      interval: ($route.query.timeEnd - $route.query.timeStart) / 30
+      timeStart: YESTERDAY,
+      timeEnd: TODAY,
+      interval: HOUR
     }
   },
 

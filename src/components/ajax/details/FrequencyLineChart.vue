@@ -1,6 +1,6 @@
 <template>
-  <view-block title="AMOUNT" :card-body="true">
-    <line-chart :series-data="seriesData" :time-interval="interval" :time-start="timeStart" style="height:300px"></line-chart>
+  <view-block title="FREQUENCY (last 24 hours)" :card-body="true">
+    <line-chart :series-data="seriesData" :time-interval="interval" :time-start="timeStart" tooltip-format="<b>{point.y:.0f}</b>" style="height:300px"></line-chart>
   </view-block>
 </template>
 

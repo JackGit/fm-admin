@@ -27,10 +27,6 @@ export default {
         name: 'AjaxDetails',
         params: {
           ajaxId: objectId
-        },
-        query: {
-          timeStart: this.timeStart.getTime(),
-          timeEnd: this.timeEnd.getTime()
         }
       })
     }

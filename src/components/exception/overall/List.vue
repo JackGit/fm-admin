@@ -15,7 +15,6 @@
         <div class="c-exceptionListItem__time">{{exception.createdAt | ago}}</div>
       </div>
     </div>
-    <el-pagination class="c-exceptionList__pagination" layout="prev, pager, next" :total="total"></el-pagination>
   </view-block>
 </template>
 
@@ -32,14 +31,6 @@ export default {
     exceptions: {
       type: Array,
       default: () => []
-    },
-    total: {
-      type: Number,
-      default: 100
-    },
-    pageSize: {
-      type: Number,
-      default: 10
     }
   },
 

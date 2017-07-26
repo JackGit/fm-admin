@@ -1,5 +1,5 @@
 <template>
-  <view-block title="Response Status" :card-body="true">
+  <view-block title="Status Code (last 24 hours)" :card-body="true">
     <pie-chart :chart-data="chartData" style="height:300px"></pie-chart>
   </view-block>
 </template>

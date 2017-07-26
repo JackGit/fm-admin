@@ -8,6 +8,7 @@
 <script>
 import ViewPage from '@/components/common/view/Page'
 import ViewBody from '@/components/ajax/details/ViewBody'
+import { TODAY, YESTERDAY } from '@/constants/time'
 
 export default {
   components: {
@@ -49,11 +50,11 @@ export default {
       })
     },
     fetchChartData (condition) {
-      const { $http, $route } = this
+      const { $http } = this
       $http.get({enalbleLoading: false}, '/async-request', {
         params: {
-          from: $route.query.timeStart,
-          end: $route.query.timeEnd,
+          from: YESTERDAY.getTime(),
+          end: TODAY.getTime(),
           url: condition.url,
           method: condition.method
         }

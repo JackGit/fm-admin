@@ -6,7 +6,6 @@
         <el-col :span="2"><el-tag type="primary" class="c-ajaxListItem__method">{{item.method}}</el-tag></el-col>
       </el-row>
     </div>
-    <el-pagination class="c-ajaxList__pagination" layout="prev, pager, next" :total="100"></el-pagination>
   </view-block>
 </template>
 

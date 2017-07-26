@@ -1,6 +1,6 @@
 <template>
-  <view-block title="PV / UV" :card-body="true" :block="true">
-    <line-chart :series-data="barSeriesData" :time-interval="timeInterval" :time-start="timeStart"></line-chart>
+  <view-block title="TCP" :card-body="true">
+    <line-chart :series-data="barSeriesData" :time-interval="timeInterval" :time-start="timeStart" style="width: 600px;height:300px"></line-chart>
   </view-block>
 </template>
 
