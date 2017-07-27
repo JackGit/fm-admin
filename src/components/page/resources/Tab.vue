@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import DnsLineChart from '../DnsLineChart'
-import TcpLineChart from '../TCPLineChart'
-import HttpLineChart from '../HTTPLineChart'
+import LineChart from '@/components/common/view/LineChart'
 import List from './List'
 import ViewForm from '@/components/common/view/Form'
 
@@ -25,9 +23,7 @@ export default {
   components: {
     ViewForm,
     List,
-    DnsLineChart,
-    TcpLineChart,
-    HttpLineChart
+    LineChart
   },
 
   data () {

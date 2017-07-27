@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/Login'
 import Dashboard from '@/pages/dashboard/Dashboard'
-import Page from '@/pages/dashboard/Page'
+import PageView from '@/pages/dashboard/PageView'
 import Visit from '@/pages/dashboard/Visit'
 import AsyncRequestList from '@/pages/dashboard/AsyncRequestList'
 import AsyncRequestDetails from '@/pages/dashboard/AsyncRequestDetails'
@@ -24,9 +24,9 @@ export default new Router({
     name: 'Dashboard',
     component: Dashboard,
     children: [{
-      path: 'page',
-      name: 'Page',
-      component: Page
+      path: 'page-view',
+      name: 'PageView',
+      component: PageView
     }, {
       path: 'visit',
       name: 'Visit',
