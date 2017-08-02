@@ -8,7 +8,7 @@
 <script>
 import ViewPage from '@/components/common/view/Page'
 import ViewBody from '@/components/exception/details/ViewBody'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -25,12 +25,26 @@ export default {
   },
 
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    exceptionDetails (val) {
+      if (val) {
+        this.getLast24HoursFrequencyStatsInfo(val.type)
+        this.getLast7DaysFrequencyStatsInfo(val.type)
+      }
+    }
+  },
+
+  computed: {
+    ...mapState('exceptionDetailsPage', {
+      exceptionDetails: state => state.exceptionDetails
+    })
   },
 
   methods: {
     ...mapActions('exceptionDetailsPage', [
       'getDetails',
+      'getLast24HoursFrequencyStatsInfo',
+      'getLast7DaysFrequencyStatsInfo',
       'clearData'
     ]),
     fetchData () {

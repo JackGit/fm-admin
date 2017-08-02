@@ -42,30 +42,18 @@ function createBarChart (el, { type, categories, tooltipFormat, seriesData, time
 
 export default {
   props: {
-    seriesData: {
-      type: Array,
-      default: () => []
-    },
+    seriesData: Array,
     type: {
       type: String,
       default: 'category' // category, datetime
     },
-    categories: {
-      type: Array,
-      default: () => []
-    },
+    categories: Array,
     tooltipFormat: {
       type: String,
       default: '<b>{point.y:.1f}</b>'
     },
-    timeInterval: {
-      type: Number,
-      default: 0
-    },
-    timeStart: {
-      type: Date,
-      default: null
-    }
+    timeInterval: Number,
+    timeStart: Date
   },
 
   mounted () {

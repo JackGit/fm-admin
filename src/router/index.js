@@ -3,9 +3,11 @@ import Router from 'vue-router'
 import Login from '@/pages/Login'
 import Dashboard from '@/pages/dashboard/Dashboard'
 import PageView from '@/pages/dashboard/PageView'
-import Visit from '@/pages/dashboard/Visit'
-import AsyncRequestList from '@/pages/dashboard/AsyncRequestList'
-import AsyncRequestDetails from '@/pages/dashboard/AsyncRequestDetails'
+import SiteView from '@/pages/dashboard/SiteView'
+import AjaxRequestList from '@/pages/dashboard/AjaxRequestList'
+import AjaxRequestDetails from '@/pages/dashboard/AjaxRequestDetails'
+import ResourceRequestList from '@/pages/dashboard/ResourceRequestList'
+import ResourceRequestDetails from '@/pages/dashboard/ResourceRequestDetails'
 import ExceptionList from '@/pages/dashboard/ExceptionList'
 import ExceptionDetails from '@/pages/dashboard/ExceptionDetails'
 
@@ -28,17 +30,25 @@ export default new Router({
       name: 'PageView',
       component: PageView
     }, {
-      path: 'visit',
-      name: 'Visit',
-      component: Visit
+      path: 'site-view',
+      name: 'SiteView',
+      component: SiteView
     }, {
-      path: 'async-request',
-      name: 'AsyncRequestList',
-      component: AsyncRequestList
+      path: 'ajax-request',
+      name: 'AjaxRequestList',
+      component: AjaxRequestList
     }, {
-      path: 'async-request/:asyncRequestId',
-      name: 'AsyncRequestDetails',
-      component: AsyncRequestDetails
+      path: 'ajax-request/details',
+      name: 'AjaxRequestDetails',
+      component: AjaxRequestDetails
+    }, {
+      path: 'resource-request',
+      name: 'ResourceRequestList',
+      component: ResourceRequestList
+    }, {
+      path: 'resource-request/details',
+      name: 'ResourceRequestDetails',
+      component: ResourceRequestDetails
     }, {
       path: 'exceptions',
       name: 'ExceptionList',

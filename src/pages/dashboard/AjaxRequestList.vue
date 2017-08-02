@@ -13,7 +13,7 @@
 import { mapState, mapActions } from 'vuex'
 import ViewPage from '@/components/common/view/Page'
 import Toolbar from '@/components/common/Toolbar'
-import ViewBody from '@/components/async-request/list/ViewBody'
+import ViewBody from '@/components/ajax-request/list/ViewBody'
 
 export default {
   components: {
@@ -23,7 +23,7 @@ export default {
   },
 
   computed: {
-    ...mapState('asyncRequestListPage', {
+    ...mapState('ajaxRequestListPage', {
       timeStart: state => state.timeStart,
       timeEnd: state => state.timeEnd
     })
@@ -38,7 +38,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('asyncRequestListPage', [
+    ...mapActions('ajaxRequestListPage', [
       'getList',
       'setTimeStart',
       'setTimeEnd'

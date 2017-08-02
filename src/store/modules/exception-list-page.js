@@ -1,4 +1,4 @@
-import { getList } from '@/api/exception'
+import { getList, statsTypes, statsFrequency } from '@/api/exception'
 import { YESTERDAY, TODAY } from '@/constants/time'
 
 export default {
@@ -7,7 +7,10 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    exceptionList: []
+    interval: (TODAY - YESTERDAY) / 100,
+    exceptionList: [],
+    typesStatsInfo: [],
+    frequencyStatsInfo: []
   },
 
   mutations: {
@@ -19,6 +22,15 @@ export default {
     },
     setTimeEnd (state, value) {
       state.timeEnd = value
+    },
+    setInterval (state, value) {
+      state.interval = value
+    },
+    setTypesStatsInfo (state, value) {
+      state.typesStatsInfo = value
+    },
+    setFrequencyStatsInfo (state, value) {
+      state.frequencyStatsInfo = value
     }
   },
 
@@ -30,11 +42,29 @@ export default {
       })
       commit('setExceptionList', response)
     },
+    async getTypesStatsInfo ({ commit }, { timeStart, timeEnd }) {
+      const response = await statsTypes({
+        timeStart,
+        timeEnd
+      })
+      commit('setTypesStatsInfo', response)
+    },
+    async getFrequencyStatsInfo ({ commit }, { timeStart, timeEnd, interval }) {
+      const response = await statsFrequency({
+        timeStart,
+        timeEnd,
+        interval
+      })
+      commit('setFrequencyStatsInfo', response)
+    },
     setTimeStart ({ commit }, timeStart) {
       commit('setTimeStart', timeStart)
     },
     setTimeEnd ({ commit }, timeEnd) {
       commit('setTimeEnd', timeEnd)
+    },
+    setInterval ({ commit }, interval) {
+      commit('setInterval', interval)
     },
     clearData ({ commit }) {
       commit('setExceptionList', [])

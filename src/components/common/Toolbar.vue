@@ -1,11 +1,11 @@
 <template>
   <div class="c-toolbar">
     <el-date-picker v-model="localRange" type="datetimerange" placeholder="Select time range" @change="handleChange"></el-date-picker>
-    <el-select v-model="selectedPage" placeholder="请选择页面">
-      <el-option v-for="item in pages"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
+    <el-select v-if="pageList" v-model="localSelectedPage" placeholder="请选择页面" @change="handlePageChange">
+      <el-option v-for="item in pageList"
+        :key="item.pageUrl"
+        :label="item.pageUrl"
+        :value="item.pageUrl">
       </el-option>
     </el-select>
     <el-button type="primary" icon="search" @click="handleClickSearch">Search</el-button>
@@ -17,40 +17,46 @@ import '@/assets/css/toolbar.css'
 
 export default {
   props: {
-    range: {
-      type: Array,
-      default: () => []
-    }
+    range: Array,
+    pageList: Array,
+    selectedPage: String
   },
 
   data () {
     return {
       localRange: Array.prototype.slice.call(this.range, 0),
-      selectedPage: 'all',
-      pages: [{
-        value: 'all',
-        label: '所有页面'
-      }, {
-        value: '1',
-        label: 'page1'
-      }, {
-        value: '2',
-        label: 'page2'
-      }]
+      localSelectedPage: this.selectedPage
     }
   },
 
   watch: {
     range (value) {
       this.localRange = Array.prototype.slice.call(this.range, 0)
+    },
+    pageList (value) {
+      if (value && value.length > 0) {
+        this.localSelectedPage = value[0].pageUrl
+      } else {
+        this.localSelectedPage = ''
+      }
+    },
+    selectedPage (value) {
+      this.localSelectedPage = value
     }
   },
 
   methods: {
-    handleChange () {
+    emitChange () {
       this.$emit('change', {
-        range: this.localRange
+        range: this.localRange,
+        page: this.localSelectedPage
       })
+    },
+    handleChange () {
+      this.emitChange()
+    },
+    handlePageChange (value) {
+      this.emitChange()
     },
     handleClickSearch () {
       this.$emit('search')

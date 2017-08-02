@@ -48,10 +48,7 @@ function createPieChart (el, data) {
 
 export default {
   props: {
-    chartData: {
-      type: Array,
-      default: () => []
-    }
+    chartData: Array
   },
 
   watch: {

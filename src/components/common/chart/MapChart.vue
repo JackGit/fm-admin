@@ -6,7 +6,7 @@
 import Highcharts from 'highcharts/highmaps'
 import ChinaMapData from '@/assets/js/china.cities.map.min'
 
-function createMapChart (el) {
+function createMapChart (el, mapData) {
   Highcharts.mapChart(el, {
     title: {
       text: ''
@@ -29,12 +29,16 @@ function createMapChart (el) {
       animation: {
         duration: 500
       },
-      data: ChinaMapData.features.map(
+      /* data: ChinaMapData.features.map(
         (feature, index) => ({
           key: feature.properties['name'],
           value: Math.random() * 10
         })
-      ),
+      ), */
+      data: mapData.map(({ name, value }) => ({
+        key: name,
+        value
+      })),
       mapData: ChinaMapData,
       joinBy: ['name', 'key'],
       dataLabels: {
@@ -51,8 +55,25 @@ function createMapChart (el) {
 }
 
 export default {
+  props: {
+    mapData: Array
+  },
+
+  watch: {
+    mapData () {
+      console.log(this.mapData)
+      this.updateChart()
+    }
+  },
+
   mounted () {
-    createMapChart(this.$el)
+    this.updateChart()
+  },
+
+  methods: {
+    updateChart () {
+      createMapChart(this.$el, this.mapData || [])
+    }
   }
 }
 </script>

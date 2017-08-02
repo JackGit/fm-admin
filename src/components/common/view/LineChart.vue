@@ -1,6 +1,6 @@
 <template>
   <view-block :title="title" :card-body="true">
-    <line-chart :series-data="seriesData" :time-interval="interval" :time-start="timeStart" style="width: 600px;height:300px"></line-chart>
+    <line-chart :series-data="seriesData" :time-interval="interval" :time-start="timeStart" :tooltip-format="tooltipFormat" style="width: 600px;height:300px"></line-chart>
   </view-block>
 </template>
 
@@ -18,7 +18,8 @@ export default {
     title: String,
     seriesData: Array,
     timeStart: Date,
-    interval: Number
+    interval: Number,
+    tooltipFormat: String
   }
 }
 </script>

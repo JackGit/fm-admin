@@ -24,9 +24,9 @@ export default {
 
   computed: {
     ...mapState('exceptionListPage', {
-      exceptionList: state => state.exceptionList,
       timeStart: state => state.timeStart,
-      timeEnd: state => state.timeEnd
+      timeEnd: state => state.timeEnd,
+      interval: state => state.interval
     })
   },
 
@@ -45,6 +45,9 @@ export default {
   methods: {
     ...mapActions('exceptionListPage', [
       'getList',
+      'getTypesStatsInfo',
+      'getFrequencyStatsInfo',
+      'setInterval',
       'setTimeStart',
       'setTimeEnd',
       'clearData'
@@ -55,10 +58,20 @@ export default {
         timeStart,
         timeEnd
       })
+      this.getTypesStatsInfo({
+        timeStart,
+        timeEnd
+      })
+      this.getFrequencyStatsInfo({
+        timeStart,
+        timeEnd,
+        interval: this.interval
+      })
     },
     handleToolbarChange (data) {
       this.setTimeStart(data.range[0])
       this.setTimeEnd(data.range[1])
+      this.setInterval((data.range[1] - data.range[0]) / 100)
     },
     handleClickSearch () {
       this.fetchData()

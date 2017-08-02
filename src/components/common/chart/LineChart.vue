@@ -49,22 +49,13 @@ function createLineChart (el, { tooltipFormat, seriesData, timeInterval, timeSta
 
 export default {
   props: {
-    seriesData: {
-      type: Array,
-      default: () => []
-    },
+    seriesData: Array,
     tooltipFormat: {
       type: String,
       default: '<b>{point.y:.1f}</b>'
     },
-    timeInterval: {
-      type: Number,
-      default: 0
-    },
-    timeStart: {
-      type: Date,
-      default: null
-    }
+    timeInterval: Number,
+    timeStart: Date
   },
 
   watch: {

@@ -17,17 +17,18 @@ export default {
   },
 
   computed: {
-    ...mapState('asyncRequestListPage', {
+    ...mapState('ajaxRequestListPage', {
       asyncRequestList: state => state.asyncRequestList
     })
   },
 
   methods: {
-    handleSelect ({ objectId }) {
+    handleSelect ({ url, method }) {
       this.$router.push({
-        name: 'AsyncRequestDetails',
-        params: {
-          asyncRequestId: objectId
+        name: 'AjaxRequestDetails',
+        query: {
+          method,
+          url
         }
       })
     }

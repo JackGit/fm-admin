@@ -35,11 +35,11 @@ export default {
   },
 
   methods: {
-    handleClick ({ objectId }) {
+    handleClick ({ _id }) {
       this.$router.push({
         name: 'ExceptionDetails',
         params: {
-          exceptionId: objectId
+          exceptionId: _id
         }
       })
     }

@@ -1,23 +1,31 @@
 import http from './http'
-import { convertDateField } from '@/utils/date'
 
-export async function getList ({ timeStart, timeEnd, pageUrl, limit }) {
+export async function getList () {
   return http.get('/page-view', {
     params: {
-      from: timeStart.getTime(),
-      end: timeEnd.getTime(),
-      pageUrl: pageUrl ? encodeURIComponent(pageUrl) : '',
-      limit
+      distinctFields: 'pageUrl'
     }
-  }).then(({ data }) => {
-    data.forEach(d => convertDateField(d))
-    return data
-  })
+  }).then(({ data }) => data)
 }
 
-export async function getDetails (objectId) {
-  return http.get(`/page-view/${objectId}`).then(({ data }) => {
-    convertDateField(data)
-    return data
-  })
+export async function statsPV ({ pageUrl, timeStart, timeEnd, interval }) {
+  return http.get('/stats/page/pv', {
+    params: {
+      pageUrl,
+      from: timeStart.getTime(),
+      end: timeEnd.getTime(),
+      interval
+    }
+  }).then(({ data }) => data)
+}
+
+export async function statsTiming ({ pageUrl, timeStart, timeEnd, interval }) {
+  return http.get('/stats/page/timing', {
+    params: {
+      pageUrl,
+      from: timeStart.getTime(),
+      end: timeEnd.getTime(),
+      interval
+    }
+  }).then(({ data }) => data)
 }

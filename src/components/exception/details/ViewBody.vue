@@ -1,8 +1,8 @@
 <template>
   <div class="c-execptionDetails">
-    <el-row>
+    <el-row v-if="exceptionDetails">
       <el-col :span="18">
-        <view-form :form-data="[{ label: 'ID', value: exceptionDetails.objectId }]"></view-form>
+        <view-form :form-data="[{ label: 'ID', value: exceptionDetails._id }]"></view-form>
         <view-form title="Exception" :form-data="exceptionForm"></view-form>
         <view-form title="Headers" :form-data="headersForm"></view-form>
         <view-form title="User" :form-data="userForm"></view-form>

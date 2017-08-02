@@ -1,6 +1,6 @@
 <template>
-  <view-block title="ERROR TYPES" :card-body="true">
-    <pie-chart :chart-data="pieChartData" style="height:300px"></pie-chart>
+  <view-block :title="title" :card-body="true">
+    <pie-chart :chart-data="chartData" style="height:300px"></pie-chart>
   </view-block>
 </template>
 
@@ -15,7 +15,8 @@ export default {
   },
 
   props: {
-    pieChartData: Array
+    title: String,
+    chartData: Array
   }
 }
 </script>

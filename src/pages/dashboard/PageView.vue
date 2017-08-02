@@ -3,6 +3,8 @@
     <h1 class="l-nomargin" slot="header">Page</h1>
     <toolbar slot="toolbar"
              :range="[timeStart, timeEnd]"
+             :pageList="pageList"
+             :selected-page="selectedPage"
              @change="handleToolbarChange"
              @search="handleClickSearch"></toolbar>
     <view-body slot="body"></view-body>
@@ -25,7 +27,9 @@ export default {
   computed: {
     ...mapState('pageViewPage', {
       timeStart: state => state.timeStart,
-      timeEnd: state => state.timeEnd
+      timeEnd: state => state.timeEnd,
+      pageList: state => state.pageList,
+      selectedPage: state => state.selectedPage
     })
   },
 
@@ -38,23 +42,32 @@ export default {
   },
 
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    selectedPage (value) {
+      if (value) {
+        this.getPVStatsInfo()
+        this.getTimingStatsInfo()
+      }
+    }
   },
 
   methods: {
     ...mapActions('pageViewPage', [
       'getList',
+      'getPVStatsInfo',
+      'getTimingStatsInfo',
+      'setSelectedPage',
       'clearData',
       'setTimeStart',
       'setTimeEnd'
     ]),
     fetchData () {
-      const { getList, timeStart, timeEnd } = this
-      getList({ timeStart, timeEnd })
+      this.getList()
     },
     handleToolbarChange (data) {
       this.setTimeStart(data.range[0])
       this.setTimeEnd(data.range[1])
+      this.setSelectedPage(data.page)
     },
     handleClickSearch () {
       this.fetchData()

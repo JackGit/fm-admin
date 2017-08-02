@@ -1,8 +1,8 @@
 <template>
   <div class="c-execptionOverall">
     <template v-if="exceptionList.length > 0">
-      <type-pie-chart :pie-chart-data="typePieChartData"></type-pie-chart>
-      <frequency-line-chart :series-data="lineChartData" :time-start="timeStart" :interval="interval"></frequency-line-chart>
+      <pie-chart title="Type" :chart-data="typePieChartData"></pie-chart>
+      <line-chart title="Frequency" :series-data="lineChartData" :time-start="timeStart" :interval="interval" tooltip-format="<b>{point.y:.0f}</b>"></line-chart>
       <exception-list :exceptions="exceptionList"></exception-list>
     </template>
     <p v-else>No exceptions, great job!</p>
@@ -11,44 +11,37 @@
 
 <script>
 import '@/assets/css/exception-overall.css'
-import TypePieChart from './TypePieChart'
-import FrequencyLineChart from './FrequencyLineChart'
+import LineChart from '@/components/common/view/LineChart'
+import PieChart from '@/components/common/view/PieChart'
 import ExceptionList from './List'
 import { mapState } from 'vuex'
-import { groupByType, groupByTimeInterval } from '@/utils/group'
 
 export default {
   components: {
-    TypePieChart,
-    FrequencyLineChart,
-    ExceptionList
-  },
-
-  data () {
-    return {
-      interval: 0
-    }
+    ExceptionList,
+    LineChart,
+    PieChart
   },
 
   computed: {
     ...mapState('exceptionListPage', {
       exceptionList: state => state.exceptionList,
+      typesStatsInfo: state => state.typesStatsInfo,
+      frequencyStatsInfo: state => state.frequencyStatsInfo,
       timeStart: state => state.timeStart,
-      timeEnd: state => state.timeEnd
+      timeEnd: state => state.timeEnd,
+      interval: state => state.interval
     }),
     typePieChartData () {
-      return groupByType(this.exceptionList, 'name').map(item => ({
-        name: item[0].name,
-        value: item.length
+      return this.typesStatsInfo.map(item => ({
+        name: item.type,
+        value: item.count
       }))
     },
     lineChartData () {
-      const { exceptionList, timeStart, timeEnd } = this
-      this.interval = (timeEnd - timeStart) / 50
-      const group = groupByTimeInterval(exceptionList, 'createdAt', timeStart, timeEnd, this.interval)
       return [{
         name: 'Frequency',
-        data: group.map(subGroup => subGroup.length)
+        data: this.frequencyStatsInfo.map(item => item.count)
       }]
     }
   }

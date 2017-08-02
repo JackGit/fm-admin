@@ -1,5 +1,5 @@
 import { YESTERDAY, TODAY } from '@/constants/time'
-import { getList } from '@/api/async-request'
+import { getList } from '@/api/ajax-request'
 
 export default {
   namespaced: true,

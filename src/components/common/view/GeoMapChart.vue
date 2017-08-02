@@ -1,6 +1,6 @@
 <template>
-  <view-block title="城市" :card-body="true" :block="true">
-    <map-chart style="height:600px;"></map-chart>
+  <view-block :title="title" :card-body="true" :block="true">
+    <map-chart style="height:600px;" :map-data="mapData"></map-chart>
   </view-block>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   components: {
     MapChart,
     ViewBlock
+  },
+
+  props: {
+    title: String,
+    mapData: Array
   }
 }
 </script>

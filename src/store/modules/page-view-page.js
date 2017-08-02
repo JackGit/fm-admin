@@ -1,4 +1,4 @@
-import { getList } from '@/api/page-view'
+import { getList, statsPV, statsTiming } from '@/api/page-view'
 import { YESTERDAY, TODAY } from '@/constants/time'
 
 export default {
@@ -7,25 +7,57 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    pageViewList: []
+    interval: (TODAY - YESTERDAY) / 100,
+    pageList: [],
+    selectedPage: '',
+    pvInfo: [],
+    timingInfo: []
   },
 
   mutations: {
-    setPageViewList (state, value) {
-      state.pageViewList = value
+    setPageList (state, value) {
+      state.pageList = value
     },
     setTimeStart (state, value) {
       state.timeStart = value
     },
     setTimeEnd (state, value) {
       state.timeEnd = value
+    },
+    setSelectedPage (state, value) {
+      state.selectedPage = value
+    },
+    setPVInfo (state, value) {
+      state.pvInfo = value
+    },
+    setTimingInfo (state, value) {
+      state.timingInfo = value
     }
   },
 
   actions: {
-    async getList ({ commit }, { timeStart, timeEnd }) {
-      const response = await getList({ timeStart, timeEnd })
-      commit('setPageViewList', response)
+    async getList ({ commit }) {
+      const response = await getList()
+      commit('setPageList', response)
+      commit('setSelectedPage', response[0].pageUrl)
+    },
+    async getPVStatsInfo ({ commit, state }) {
+      const response = await statsPV({
+        pageUrl: state.selectedPage,
+        timeStart: state.timeStart,
+        timeEnd: state.timeEnd,
+        interval: state.interval
+      })
+      commit('setPVInfo', response)
+    },
+    async getTimingStatsInfo ({ commit, state }) {
+      const response = await statsTiming({
+        pageUrl: state.selectedPage,
+        timeStart: state.timeStart,
+        timeEnd: state.timeEnd,
+        interval: state.interval
+      })
+      commit('setTimingInfo', response)
     },
     setTimeStart ({ commit }, timeStart) {
       commit('setTimeStart', timeStart)
@@ -33,8 +65,14 @@ export default {
     setTimeEnd ({ commit }, timeEnd) {
       commit('setTimeEnd', timeEnd)
     },
+    setSelectedPage ({ commit }, page) {
+      commit('setSelectedPage', page)
+    },
     clearData ({ commit }) {
-      commit('setPageViewList', [])
+      commit('setPageList', [])
+      commit('setPVInfo', [])
+      commit('setTimingInfo', [])
+      commit('setSelectedPage', '')
     }
   }
 }
