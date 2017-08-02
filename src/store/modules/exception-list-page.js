@@ -1,5 +1,5 @@
 import { getList, statsTypes, statsFrequency } from '@/api/exception'
-import { YESTERDAY, TODAY } from '@/constants/time'
+import { YESTERDAY, TODAY, HALF_HOUR } from '@/constants/time'
 
 export default {
   namespaced: true,
@@ -7,7 +7,7 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    interval: (TODAY - YESTERDAY) / 100,
+    interval: HALF_HOUR,
     exceptionList: [],
     typesStatsInfo: [],
     frequencyStatsInfo: []
@@ -17,11 +17,9 @@ export default {
     setExceptionList (state, value) {
       state.exceptionList = value
     },
-    setTimeStart (state, value) {
-      state.timeStart = value
-    },
-    setTimeEnd (state, value) {
-      state.timeEnd = value
+    setTimeRange (state, { timeStart, timeEnd }) {
+      state.timeStart = timeStart
+      state.timeEnd = timeEnd
     },
     setInterval (state, value) {
       state.interval = value
@@ -35,39 +33,36 @@ export default {
   },
 
   actions: {
-    async getList ({ commit }, { timeStart, timeEnd }) {
-      const response = await getList({
-        timeStart,
-        timeEnd
-      })
-      commit('setExceptionList', response)
+    async fetchPageData ({ commit, state, dispatch }) {
+      const request = {
+        timeStart: state.timeStart,
+        timeEnd: state.timeEnd
+      }
+      const response = await Promise.all([
+        getList(request),
+        statsTypes(request),
+        dispatch('getFrequencyStatsInfo')
+      ])
+
+      commit('setExceptionList', response[0])
+      commit('setTypesStatsInfo', response[1])
     },
-    async getTypesStatsInfo ({ commit }, { timeStart, timeEnd }) {
-      const response = await statsTypes({
-        timeStart,
-        timeEnd
-      })
-      commit('setTypesStatsInfo', response)
-    },
-    async getFrequencyStatsInfo ({ commit }, { timeStart, timeEnd, interval }) {
+    async getFrequencyStatsInfo ({ commit, state }) {
       const response = await statsFrequency({
-        timeStart,
-        timeEnd,
-        interval
+        timeStart: state.timeStart,
+        timeEnd: state.timeEnd,
+        interval: state.interval
       })
       commit('setFrequencyStatsInfo', response)
     },
-    setTimeStart ({ commit }, timeStart) {
-      commit('setTimeStart', timeStart)
-    },
-    setTimeEnd ({ commit }, timeEnd) {
-      commit('setTimeEnd', timeEnd)
+    setTimeRange ({ commit }, range) {
+      commit('setTimeRange', range)
     },
     setInterval ({ commit }, interval) {
       commit('setInterval', interval)
     },
     clearData ({ commit }) {
-      commit('setExceptionList', [])
+      ['setExceptionList', 'setTypesStatsInfo', 'setFrequencyStatsInfo'].forEach(action => commit(action, []))
     }
   }
 }

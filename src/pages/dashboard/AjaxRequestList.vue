@@ -1,16 +1,16 @@
 <template>
   <view-page>
     <h1 class="l-nomargin" slot="header">Async Request</h1>
-    <toolbar slot="toolbar"
-             :range="[timeStart, timeEnd]"
-             @change="handleToolbarChange"
-             @search="handleClickSearch"></toolbar>
+    <toolbar slot="toolbar" :time-start="timeStart" :time-end="timeEnd" @change="handleToolbarChange">
+      <el-input placeholder="Filter" v-model="filterString" style="width: 200px"></el-input>
+    </toolbar>
     <view-body slot="body"></view-body>
   </view-page>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import debounce from 'lodash.debounce'
 import ViewPage from '@/components/common/view/Page'
 import Toolbar from '@/components/common/Toolbar'
 import ViewBody from '@/components/ajax-request/list/ViewBody'
@@ -20,6 +20,12 @@ export default {
     ViewPage,
     Toolbar,
     ViewBody
+  },
+
+  data () {
+    return {
+      filterString: ''
+    }
   },
 
   computed: {
@@ -33,30 +39,34 @@ export default {
     this.fetchData()
   },
 
+  destroyed () {
+    this.clearData()
+  },
+
   watch: {
-    '$route': 'fetchData'
+    '$route': 'fetchData',
+    filterString (value) {
+      this.updateFilterString(value)
+    }
   },
 
   methods: {
     ...mapActions('ajaxRequestListPage', [
-      'getList',
-      'setTimeStart',
-      'setTimeEnd'
+      'fetchPageData',
+      'setTimeRange',
+      'setFilterString',
+      'clearData'
     ]),
     fetchData () {
-      this.getList({
-        timeStart: this.timeStart,
-        timeEnd: this.timeEnd,
-        limit: 100
-      })
+      this.fetchPageData()
     },
     handleToolbarChange (data) {
-      this.setTimeStart(data.range[0])
-      this.setTimeEnd(data.range[1])
-    },
-    handleClickSearch () {
+      this.setTimeRange(data)
       this.fetchData()
-    }
+    },
+    updateFilterString: debounce(function (value) {
+      this.setFilterString(value)
+    }, 300)
   }
 }
 </script>

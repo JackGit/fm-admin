@@ -61,7 +61,6 @@ export default {
 
   watch: {
     mapData () {
-      console.log(this.mapData)
       this.updateChart()
     }
   },

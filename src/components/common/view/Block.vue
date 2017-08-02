@@ -2,6 +2,7 @@
   <div :class="!block ? 'c-viewBlock' : 'c-viewBlock--block'">
     <h4 v-if="title" class="c-viewBlock__title">
       {{title}}
+      <slot name="tool"></slot>
     </h4>
     <el-card v-if="cardBody" class="c-viewBlock__body">
       <slot></slot>

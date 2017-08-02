@@ -1,20 +1,23 @@
 <template>
   <div class="c-execptionOverall">
-    <template v-if="exceptionList.length > 0">
-      <pie-chart title="Type" :chart-data="typePieChartData"></pie-chart>
-      <line-chart title="Frequency" :series-data="lineChartData" :time-start="timeStart" :interval="interval" tooltip-format="<b>{point.y:.0f}</b>"></line-chart>
-      <exception-list :exceptions="exceptionList"></exception-list>
-    </template>
-    <p v-else>No exceptions, great job!</p>
+    <pie-chart title="Type" :chart-data="typePieChartData"></pie-chart>
+    <line-chart title="Frequency"
+      @intervalchange="handleIntervalChange"
+      :interval-selector="true"
+      :series-data="lineChartData"
+      :time-start="timeStart"
+      :interval="interval"
+      tooltip-format="<b>{point.y:.0f}</b>"></line-chart>
+    <exception-list :exceptions="exceptionList"></exception-list>
   </div>
 </template>
 
 <script>
-import '@/assets/css/exception-overall.css'
+import '@/assets/css/exception-list.css'
 import LineChart from '@/components/common/view/LineChart'
 import PieChart from '@/components/common/view/PieChart'
 import ExceptionList from './List'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -43,6 +46,17 @@ export default {
         name: 'Frequency',
         data: this.frequencyStatsInfo.map(item => item.count)
       }]
+    }
+  },
+
+  methods: {
+    ...mapActions('exceptionListPage', [
+      'setInterval',
+      'getFrequencyStatsInfo'
+    ]),
+    handleIntervalChange (interval) {
+      this.setInterval(interval)
+      this.getFrequencyStatsInfo()
     }
   }
 }

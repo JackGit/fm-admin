@@ -1,5 +1,5 @@
 import { statsPV, statsUV, statsOS, statsBrowser, statsNetworkOperator, statsLocation } from '@/api/unique-visitor'
-import { YESTERDAY, TODAY } from '@/constants/time'
+import { YESTERDAY, TODAY, HALF_HOUR } from '@/constants/time'
 
 export default {
   namespaced: true,
@@ -7,7 +7,7 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    interval: (TODAY - YESTERDAY) / 100,
+    interval: HALF_HOUR,
     pvInfo: [],
     uvInfo: [],
     osInfo: [],
@@ -17,11 +17,10 @@ export default {
   },
 
   mutations: {
-    setTimeStart (state, value) {
-      state.timeStart = value
-    },
-    setTimeEnd (state, value) {
-      state.timeEnd = value
+    setTimeQuery (state, { timeStart, timeEnd, interval }) {
+      state.timeStart = timeStart
+      state.timeEnd = timeEnd
+      state.interval = interval
     },
     setPVInfo (state, value) {
       state.pvInfo = value
@@ -44,58 +43,33 @@ export default {
   },
 
   actions: {
-    async getPVStatsInfo ({ commit, state }) {
-      const response = await statsPV({
+    async fetchPageData ({ commit, state }) {
+      const request = {
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,
         interval: state.interval
-      })
-      commit('setPVInfo', response)
+      }
+      const response = await Promise.all([
+        statsPV(request),
+        statsUV(request),
+        statsOS(request),
+        statsBrowser(request),
+        statsNetworkOperator(request),
+        statsLocation(request)
+      ])
+
+      commit('setPVInfo', response[0])
+      commit('setUVInfo', response[1])
+      commit('setOSInfo', response[2])
+      commit('setBrowserInfo', response[3])
+      commit('setNetworkOperatorInfo', response[4])
+      commit('setLocationInfo', response[5])
     },
-    async getUVStatsInfo ({ commit, state }) {
-      const response = await statsUV({
-        timeStart: state.timeStart,
-        timeEnd: state.timeEnd,
-        interval: state.interval
-      })
-      commit('setUVInfo', response)
-    },
-    async getOSStatsInfo ({ commit, state }) {
-      const response = await statsOS({
-        timeStart: state.timeStart,
-        timeEnd: state.timeEnd
-      })
-      commit('setOSInfo', response)
-    },
-    async getBrowserStatsInfo ({ commit, state }) {
-      const response = await statsBrowser({
-        timeStart: state.timeStart,
-        timeEnd: state.timeEnd
-      })
-      commit('setBrowserInfo', response)
-    },
-    async getNetworkOperatorStatsInfo ({ commit, state }) {
-      const response = await statsNetworkOperator({
-        timeStart: state.timeStart,
-        timeEnd: state.timeEnd
-      })
-      commit('setNetworkOperatorInfo', response)
-    },
-    async getLocationStatsInfo ({ commit, state }) {
-      const response = await statsLocation({
-        timeStart: state.timeStart,
-        timeEnd: state.timeEnd
-      })
-      commit('setLocationInfo', response)
-    },
-    setTimeStart ({ commit }, timeStart) {
-      commit('setTimeStart', timeStart)
-    },
-    setTimeEnd ({ commit }, timeEnd) {
-      commit('setTimeEnd', timeEnd)
+    setTimeQuery ({ commit }, query) {
+      commit('setTimeQuery', query)
     },
     clearData ({ commit }) {
-      commit('setPVInfo', [])
+      ['setLocationInfo', 'setNetworkOperatorInfo', 'setBrowserInfo', 'setOSInfo', 'setUVInfo', 'setPVInfo'].forEach(item => commit(item, []))
     }
   }
 }

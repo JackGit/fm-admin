@@ -2,7 +2,9 @@
   <view-page>
     <h1 class="l-nomargin" slot="header">Site View</h1>
     <toolbar slot="toolbar"
-             :range="[timeStart, timeEnd]"
+             :time-start="timeStart"
+             :time-end="timeEnd"
+             :interval="interval"
              @change="handleToolbarChange"></toolbar>
     <view-body slot="body"></view-body>
   </view-page>
@@ -24,7 +26,8 @@ export default {
   computed: {
     ...mapState('siteViewPage', {
       timeStart: state => state.timeStart,
-      timeEnd: state => state.timeEnd
+      timeEnd: state => state.timeEnd,
+      interval: state => state.interval
     })
   },
 
@@ -37,28 +40,22 @@ export default {
   },
 
   watch: {
-    '$route': 'fetchData'
+    $route: 'fetchData'
   },
 
   methods: {
     ...mapActions('siteViewPage', [
-      'getUVStatsInfo',
-      'getPVStatsInfo',
-      'getBrowserStatsInfo',
-      'getOSStatsInfo',
-      'getNetworkOperatorStatsInfo',
-      'getLocationStatsInfo',
+      'fetchPageData',
+      'setTimeQuery',
       'clearData'
     ]),
     fetchData () {
-      this.getUVStatsInfo()
-      this.getPVStatsInfo()
-      this.getBrowserStatsInfo()
-      this.getOSStatsInfo()
-      this.getNetworkOperatorStatsInfo()
-      this.getLocationStatsInfo()
+      this.fetchPageData()
     },
-    handleToolbarChange () {}
+    handleToolbarChange (data) {
+      this.setTimeQuery(data)
+      this.fetchData()
+    }
   }
 }
 </script>

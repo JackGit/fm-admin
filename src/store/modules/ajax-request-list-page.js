@@ -7,35 +7,39 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    asyncRequestList: []
+    filterString: '',
+    ajaxRequestList: []
   },
 
   mutations: {
-    setAsyncRequestList (state, value) {
-      state.asyncRequestList = value
+    setAjaxRequestList (state, value) {
+      state.ajaxRequestList = value
     },
-    setTimeStart (state, value) {
-      state.timeStart = value
+    setTimeRange (state, { timeStart, timeEnd }) {
+      state.timeStart = timeStart
+      state.timeEnd = timeEnd
     },
-    setTimeEnd (state, value) {
-      state.timeEnd = value
+    setFilterString (state, value) {
+      state.filterString = value
     }
   },
 
   actions: {
-    async getList ({ commit }, { timeStart, timeEnd, limit }) {
+    async fetchPageData ({ commit, state }) {
       const list = await getList({
-        timeStart,
-        timeEnd,
-        limit
+        timeStart: state.timeStart,
+        timeEnd: state.timeEnd
       })
-      commit('setAsyncRequestList', list)
+      commit('setAjaxRequestList', list)
     },
-    setTimeStart ({ commit }, timeStart) {
-      commit('setTimeStart', timeStart)
+    setTimeRange ({ commit }, range) {
+      commit('setTimeRange', range)
     },
-    setTimeEnd ({ commit }, timeEnd) {
-      commit('setTimeEnd', timeEnd)
+    setFilterString ({ commit }, string) {
+      commit('setFilterString', string)
+    },
+    clearData ({ commit }) {
+      commit('setAjaxRequestList', [])
     }
   }
 }

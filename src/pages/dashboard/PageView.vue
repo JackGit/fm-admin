@@ -2,11 +2,12 @@
   <view-page>
     <h1 class="l-nomargin" slot="header">Page</h1>
     <toolbar slot="toolbar"
-             :range="[timeStart, timeEnd]"
-             :pageList="pageList"
+             :time-start="timeStart"
+             :time-end="timeEnd"
+             :interval="interval"
+             :page-list="pageList"
              :selected-page="selectedPage"
-             @change="handleToolbarChange"
-             @search="handleClickSearch"></toolbar>
+             @change="handleToolbarChange"></toolbar>
     <view-body slot="body"></view-body>
   </view-page>
 </template>
@@ -28,6 +29,7 @@ export default {
     ...mapState('pageViewPage', {
       timeStart: state => state.timeStart,
       timeEnd: state => state.timeEnd,
+      interval: state => state.interval,
       pageList: state => state.pageList,
       selectedPage: state => state.selectedPage
     })
@@ -42,34 +44,22 @@ export default {
   },
 
   watch: {
-    '$route': 'fetchData',
-    selectedPage (value) {
-      if (value) {
-        this.getPVStatsInfo()
-        this.getTimingStatsInfo()
-      }
-    }
+    '$route': 'fetchData'
   },
 
   methods: {
     ...mapActions('pageViewPage', [
-      'getList',
-      'getPVStatsInfo',
-      'getTimingStatsInfo',
+      'fetchPageData',
+      'setTimeQuery',
       'setSelectedPage',
-      'clearData',
-      'setTimeStart',
-      'setTimeEnd'
+      'clearData'
     ]),
     fetchData () {
-      this.getList()
+      this.fetchPageData()
     },
-    handleToolbarChange (data) {
-      this.setTimeStart(data.range[0])
-      this.setTimeEnd(data.range[1])
-      this.setSelectedPage(data.page)
-    },
-    handleClickSearch () {
+    handleToolbarChange ({ page, timeStart, timeEnd, interval }) {
+      this.setSelectedPage(page)
+      this.setTimeQuery({ timeStart, timeEnd, interval })
       this.fetchData()
     }
   }

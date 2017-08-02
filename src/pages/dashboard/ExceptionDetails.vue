@@ -25,13 +25,7 @@ export default {
   },
 
   watch: {
-    '$route': 'fetchData',
-    exceptionDetails (val) {
-      if (val) {
-        this.getLast24HoursFrequencyStatsInfo(val.type)
-        this.getLast7DaysFrequencyStatsInfo(val.type)
-      }
-    }
+    '$route': 'fetchData'
   },
 
   computed: {
@@ -42,13 +36,11 @@ export default {
 
   methods: {
     ...mapActions('exceptionDetailsPage', [
-      'getDetails',
-      'getLast24HoursFrequencyStatsInfo',
-      'getLast7DaysFrequencyStatsInfo',
+      'fetchPageData',
       'clearData'
     ]),
     fetchData () {
-      this.getDetails(this.$route.params.exceptionId)
+      this.fetchPageData(this.$route.params.exceptionId)
     }
   }
 }

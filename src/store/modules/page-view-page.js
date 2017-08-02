@@ -1,5 +1,5 @@
 import { getList, statsPV, statsTiming } from '@/api/page-view'
-import { YESTERDAY, TODAY } from '@/constants/time'
+import { YESTERDAY, TODAY, HALF_HOUR } from '@/constants/time'
 
 export default {
   namespaced: true,
@@ -7,7 +7,7 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    interval: (TODAY - YESTERDAY) / 100,
+    interval: HALF_HOUR,
     pageList: [],
     selectedPage: '',
     pvInfo: [],
@@ -18,11 +18,10 @@ export default {
     setPageList (state, value) {
       state.pageList = value
     },
-    setTimeStart (state, value) {
-      state.timeStart = value
-    },
-    setTimeEnd (state, value) {
-      state.timeEnd = value
+    setTimeQuery (state, { timeStart, timeEnd, interval }) {
+      state.timeStart = timeStart
+      state.timeEnd = timeEnd
+      state.interval = interval
     },
     setSelectedPage (state, value) {
       state.selectedPage = value
@@ -36,34 +35,32 @@ export default {
   },
 
   actions: {
-    async getList ({ commit }) {
-      const response = await getList()
-      commit('setPageList', response)
-      commit('setSelectedPage', response[0].pageUrl)
-    },
-    async getPVStatsInfo ({ commit, state }) {
-      const response = await statsPV({
+    async fetchPageData ({ commit, state }) {
+      // get page list
+      const list = await getList()
+      commit('setPageList', list)
+      commit('setSelectedPage', list[0].pageUrl)
+
+      // get pv stats info
+      const pv = await statsPV({
         pageUrl: state.selectedPage,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,
         interval: state.interval
       })
-      commit('setPVInfo', response)
-    },
-    async getTimingStatsInfo ({ commit, state }) {
-      const response = await statsTiming({
+      commit('setPVInfo', pv)
+
+      // get timing stats info
+      const timing = await statsTiming({
         pageUrl: state.selectedPage,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,
         interval: state.interval
       })
-      commit('setTimingInfo', response)
+      commit('setTimingInfo', timing)
     },
-    setTimeStart ({ commit }, timeStart) {
-      commit('setTimeStart', timeStart)
-    },
-    setTimeEnd ({ commit }, timeEnd) {
-      commit('setTimeEnd', timeEnd)
+    setTimeQuery ({ commit }, query) {
+      commit('setTimeQuery', query)
     },
     setSelectedPage ({ commit }, page) {
       commit('setSelectedPage', page)

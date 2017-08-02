@@ -46,6 +46,10 @@
   text-align: left;
   text-transform: uppercase;
   color: #99A9BF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
 }
 .c-viewBlock__body {
 

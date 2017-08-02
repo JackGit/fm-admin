@@ -1,5 +1,5 @@
 import { stats } from '@/api/ajax-request'
-import { YESTERDAY, TODAY, HOUR } from '@/constants/time'
+import { YESTERDAY, TODAY, HALF_HOUR } from '@/constants/time'
 
 export default {
   namespaced: true,
@@ -7,7 +7,7 @@ export default {
   state: {
     timeStart: YESTERDAY,
     timeEnd: TODAY,
-    interval: HOUR,
+    interval: HALF_HOUR,
     statusStatsInfo: [],
     frequencyStatsInfo: [],
     durationStatsInfo: []
@@ -22,11 +22,16 @@ export default {
     },
     setDurationStatsInfo (state, value) {
       state.durationStatsInfo = value
+    },
+    setTimeQuery (state, { timeStart, timeEnd, interval }) {
+      state.timeStart = timeStart
+      state.timeEnd = timeEnd
+      state.interval = interval
     }
   },
 
   actions: {
-    async getStatsInfo ({ commit, state }, { url, method }) {
+    async fetchPageData ({ commit, state }, { url, method }) {
       const response = await stats({
         url,
         method,
@@ -38,10 +43,11 @@ export default {
       commit('setFrequencyStatsInfo', response.frequencyInfo.map(({ startTime, count }) => ({ startTime, count })))
       commit('setDurationStatsInfo', response.frequencyInfo.map(({ startTime, avgDuration }) => ({ startTime, avgDuration })))
     },
+    setTimeQuery ({ commit }, query) {
+      commit('setTimeQuery', query)
+    },
     clearData ({ commit }) {
-      commit('setStatusStatsInfo', [])
-      commit('setFrequencyStatsInfo', [])
-      commit('setDurationStatsInfo', [])
+      ['setStatusStatsInfo', 'setFrequencyStatsInfo', 'setDurationStatsInfo'].forEach(action => commit(action, []))
     }
   }
 }
