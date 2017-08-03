@@ -8,6 +8,10 @@ export async function create (request) {
   }).then(({ data }) => data)
 }
 
+export async function remove (id) {
+  return http.delete(`/projects/${id}`).then(({ data }) => data)
+}
+
 export async function getList () {
   return http.get('/projects').then(({ data }) => data)
 }

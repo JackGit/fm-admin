@@ -31,6 +31,9 @@ export default window.store = new Vuex.Store({
     },
     addProject (state, value) {
       state.projectList.push(value)
+    },
+    deleteProject (state, value) {
+      state.projectList = state.projectList.filter(project => project._id !== value)
     }
   },
 
@@ -45,6 +48,9 @@ export default window.store = new Vuex.Store({
     },
     selectProject ({ commit, state }, id) {
       commit('setCurrentProject', state.projectList.filter(project => project._id === id)[0])
+    },
+    deleteProject ({ commit }, id) {
+      commit('deleteProject', id)
     }
   },
 

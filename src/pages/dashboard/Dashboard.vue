@@ -13,7 +13,7 @@
 
 <script>
 import '@/assets/css/dashboard.css'
-import SideBar from '@/components/dashboard/SideBar'
+import SideBar from '@/components/common/SideBar'
 import { mapActions } from 'vuex'
 
 export default {

@@ -1,5 +1,5 @@
 <template>
-  <el-menu default-active="visit" theme="dark" router class="c-dashboard__sideBar">
+  <el-menu class="c-dashboard__sideBar" theme="dark" router :default-active="$route.path">
     <div style="height:73px;display:flex;align-items:center;justify-content:center;background:#1F2D3D">
       <el-dropdown style="width:80%" @command="selectProject">
         <el-button style="width:100%" type="info">

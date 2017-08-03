@@ -27,6 +27,9 @@ html, body {
 .l-borderless {
   border: 0;
 }
+.l-right {
+  float: right
+}
 
 
 .c-url {
