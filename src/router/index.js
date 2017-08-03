@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/Login'
 import Dashboard from '@/pages/dashboard/Dashboard'
+import Project from '@/pages/dashboard/Project'
 import PageView from '@/pages/dashboard/PageView'
 import SiteView from '@/pages/dashboard/SiteView'
 import AjaxRequestList from '@/pages/dashboard/AjaxRequestList'
@@ -16,7 +17,7 @@ Vue.use(Router)
 export default new Router({
   routes: [{
     path: '/',
-    redirect: '/dashboard/visit'
+    redirect: '/dashboard/site-view'
   }, {
     path: '/login',
     name: 'Login',
@@ -26,6 +27,10 @@ export default new Router({
     name: 'Dashboard',
     component: Dashboard,
     children: [{
+      path: 'projects',
+      name: 'Projects',
+      component: Project
+    }, {
       path: 'page-view',
       name: 'PageView',
       component: PageView

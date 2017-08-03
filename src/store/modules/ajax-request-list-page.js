@@ -28,7 +28,8 @@ export default {
     async fetchPageData ({ commit, state }) {
       const list = await getList({
         timeStart: state.timeStart,
-        timeEnd: state.timeEnd
+        timeEnd: state.timeEnd,
+        limit: 200
       })
       commit('setAjaxRequestList', list)
     },

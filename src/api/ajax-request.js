@@ -4,7 +4,8 @@ export async function getList ({ timeStart, timeEnd, limit, url, method }) {
   return http.get('/ajax-requests', {
     params: {
       distinctFields: 'url,method',
-      fields: 'url,method'
+      fields: 'url,method',
+      limit
     }
   }).then(({ data }) => data)
 }

@@ -14,10 +14,25 @@
 <script>
 import '@/assets/css/dashboard.css'
 import SideBar from '@/components/dashboard/SideBar'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
     SideBar
+  },
+
+  created () {
+    this.getProjectList()
+  },
+
+  watch: {
+    '$route': 'getProjectList'
+  },
+
+  methods: {
+    ...mapActions([
+      'getProjectList'
+    ])
   }
 }
 </script>

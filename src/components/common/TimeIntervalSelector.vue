@@ -24,11 +24,20 @@ export default {
         value: DAY,
         label: '1天'
       }, {
+        value: HOUR * 12,
+        label: '12小时'
+      }, {
+        value: HOUR * 6,
+        label: '6小时'
+      }, {
+        value: HOUR * 2,
+        label: '2小时'
+      }, {
         value: HOUR,
         label: '1小时'
       }, {
         value: HALF_HOUR,
-        label: '0.5小时'
+        label: '30分钟'
       }, {
         value: QUARTER,
         label: '15分钟'
