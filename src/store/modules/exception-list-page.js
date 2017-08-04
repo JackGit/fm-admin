@@ -33,20 +33,26 @@ export default {
   },
 
   actions: {
-    async fetchPageData ({ commit, state, rootState, dispatch }) {
-      const request = {
+    async fetchPageData ({ dispatch }) {
+      dispatch('getList')
+      dispatch('getTypeStatsInfo')
+      dispatch('getFrequencyStatsInfo')
+    },
+    async getList ({ commit, state, rootState }) {
+      const response = await getList({
         projectId: rootState.currentProject._id,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd
-      }
-      const response = await Promise.all([
-        getList(request),
-        statsTypes(request),
-        dispatch('getFrequencyStatsInfo')
-      ])
-
-      commit('setExceptionList', response[0])
-      commit('setTypesStatsInfo', response[1])
+      })
+      commit('setExceptionList', response)
+    },
+    async getTypeStatsInfo ({ commit, state, rootState }) {
+      const response = await statsTypes({
+        projectId: rootState.currentProject._id,
+        timeStart: state.timeStart,
+        timeEnd: state.timeEnd
+      })
+      commit('setTypesStatsInfo', response)
     },
     async getFrequencyStatsInfo ({ commit, state, rootState }) {
       const response = await statsFrequency({
