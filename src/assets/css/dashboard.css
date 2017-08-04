@@ -9,6 +9,10 @@
   border-radius: 0 !important;
 }
 
+.c-dashboard__sideBar .iconfont {
+  margin-right: 10px;
+}
+
 .c-dashboard__viewContainer {
   position: relative;
   height: 100vh;

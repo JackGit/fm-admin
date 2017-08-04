@@ -11,12 +11,12 @@
       </el-dropdown>
     </div>
 
-    <el-menu-item index="/dashboard/projects">Projects</el-menu-item>
-    <el-menu-item index="/dashboard/site-view">Site View</el-menu-item>
-    <el-menu-item index="/dashboard/page-view">Page View</el-menu-item>
-    <el-menu-item index="/dashboard/resource-request">Resource Request</el-menu-item>
-    <el-menu-item index="/dashboard/ajax-request">Ajax Request</el-menu-item>
-    <el-menu-item index="/dashboard/exceptions">Exceptions</el-menu-item>
+    <el-menu-item index="/dashboard/projects"><i class="iconfont icon-project"></i>Projects</el-menu-item>
+    <el-menu-item index="/dashboard/site-view"><i class="iconfont icon-website-new"></i>Site View</el-menu-item>
+    <el-menu-item index="/dashboard/page-view"><i class="iconfont icon-page"></i>Page View</el-menu-item>
+    <el-menu-item index="/dashboard/resource-request"><i class="iconfont icon-resource"></i>Resource Request</el-menu-item>
+    <el-menu-item index="/dashboard/ajax-request"><i class="iconfont icon-Requestforquotation"></i>Ajax Request</el-menu-item>
+    <el-menu-item index="/dashboard/exceptions"><i class="iconfont icon-error"></i>Exceptions</el-menu-item>
   </el-menu>
 </template>
 

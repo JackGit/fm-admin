@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import '@/assets/css/visit.css'
 import GeoMapChart from '@/components/common/view/GeoMapChart'
 import LineChart from '@/components/common/view/LineChart'
 import PieChart from '@/components/common/view/PieChart'
