@@ -52,6 +52,7 @@ export default window.store = new Vuex.Store({
     },
     selectProject ({ commit, state }, id) {
       commit('setCurrentProject', state.projectList.filter(project => project._id === id)[0])
+      window.location.reload()
     },
     deleteProject ({ commit }, id) {
       commit('deleteProject', id)
