@@ -1,10 +1,11 @@
 import { create, remove } from '@/api/project'
+import { get } from '@/utils/local'
 
 export default {
   namespaced: true,
 
   state: {
-    selectedProjectId: '',
+    selectedProjectId: get('currentProject') ? get('currentProject')._id : '',
     displayNewProjectDialog: false
   },
 

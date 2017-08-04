@@ -46,9 +46,9 @@ function createMapChart (el, mapData) {
         color: '#FFFFFF',
         format: '{point.code}'
       },
-      name: 'Population density',
+      name: 'Location Distribution',
       tooltip: {
-        pointFormat: '{point.key}: {point.value}/km²'
+        pointFormat: '{point.key}次'
       }
     }]
   })
