@@ -23,17 +23,19 @@ export default {
   },
 
   actions: {
-    async fetchPageData ({ commit }, id) {
+    async fetchPageData ({ commit, rootState }, id) {
       const exceptionDetails = await getDetails(id)
       commit('setExceptionDetails', exceptionDetails)
 
       const response = await Promise.all([
         statsFrequency({
+          projectId: rootState.currentProject._id,
           timeStart: YESTERDAY,
           timeEnd: TODAY,
           interval: HOUR
         }),
         statsFrequency({
+          projectId: rootState.currentProject._id,
           timeStart: new Date(TODAY - 7 * DAY),
           timeEnd: TODAY,
           interval: DAY

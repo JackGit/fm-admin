@@ -1,8 +1,9 @@
 import http from './http'
 
-export async function getList ({ timeStart, timeEnd, limit, url, method }) {
+export async function getList ({ projectId, timeStart, timeEnd, limit, url, method }) {
   return http.get('/ajax-requests', {
     params: {
+      projectId,
       distinctFields: 'url,method',
       fields: 'url,method',
       limit
@@ -10,9 +11,10 @@ export async function getList ({ timeStart, timeEnd, limit, url, method }) {
   }).then(({ data }) => data)
 }
 
-export async function stats ({ url, method, timeStart, timeEnd, interval }) {
+export async function stats ({ projectId, url, method, timeStart, timeEnd, interval }) {
   return http.get('/stats/ajax-request', {
     params: {
+      projectId,
       url,
       method,
       from: timeStart.getTime(),

@@ -11,15 +11,15 @@ import pageViewPage from './modules/page-view-page'
 import siteViewPage from './modules/site-view-page'
 
 import { getList as getProjectList } from '@/api/project'
+import { save, get } from '@/utils/local'
 
 Vue.use(Vuex)
 
 export default window.store = new Vuex.Store({
-
   state: {
     user: null,
     projectList: [],
-    currentProject: null
+    currentProject: get('currentProject')
   },
 
   mutations: {
@@ -28,21 +28,25 @@ export default window.store = new Vuex.Store({
     },
     setCurrentProject (state, value) {
       state.currentProject = value
+      save('currentProject', value)
     },
     addProject (state, value) {
       state.projectList.push(value)
     },
     deleteProject (state, value) {
       state.projectList = state.projectList.filter(project => project._id !== value)
+      if (get('currentProject') && value === get('currentProject')._id) {
+        save('currentProject', null)
+      }
     }
   },
 
   actions: {
-    async getProjectList ({ commit, dispatch }) {
+    async getProjectList ({ commit, dispatch, state }) {
       const response = await getProjectList()
       commit('setProjectList', response)
 
-      if (response.length > 0) {
+      if (!state.currentProject && response.length > 0) {
         dispatch('selectProject', response[0]._id)
       }
     },

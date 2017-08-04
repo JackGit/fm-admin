@@ -25,8 +25,9 @@ export default {
   },
 
   actions: {
-    async fetchPageData ({ commit, state }) {
+    async fetchPageData ({ commit, state, rootState }) {
       const list = await getList({
+        projectId: rootState.currentProject._id,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,
         limit: 200

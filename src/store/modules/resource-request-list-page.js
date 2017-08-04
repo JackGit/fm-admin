@@ -14,8 +14,8 @@ export default {
   },
 
   actions: {
-    async getList ({ commit }) {
-      const response = await getList()
+    async getList ({ commit, rootState }) {
+      const response = await getList(rootState.currentProject._id)
       commit('setResourceRequestList', response)
     }
   }

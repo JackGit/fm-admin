@@ -35,14 +35,15 @@ export default {
   },
 
   actions: {
-    async fetchPageData ({ commit, state }) {
+    async fetchPageData ({ commit, state, rootState }) {
       // get page list
-      const list = await getList()
+      const list = await getList(rootState.currentProject._id)
       commit('setPageList', list)
-      commit('setSelectedPage', list[0].pageUrl)
+      commit('setSelectedPage', list.length > 0 ? list[0].pageUrl : '')
 
       // get pv stats info
       const pv = await statsPV({
+        projectId: rootState.currentProject._id,
         pageUrl: state.selectedPage,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,
@@ -52,6 +53,7 @@ export default {
 
       // get timing stats info
       const timing = await statsTiming({
+        projectId: rootState.currentProject._id,
         pageUrl: state.selectedPage,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,

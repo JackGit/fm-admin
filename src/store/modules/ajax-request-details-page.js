@@ -31,8 +31,9 @@ export default {
   },
 
   actions: {
-    async fetchPageData ({ commit, state }, { url, method }) {
+    async fetchPageData ({ commit, state, rootState }, { url, method }) {
       const response = await stats({
+        projectId: rootState.currentProject._id,
         url,
         method,
         timeStart: state.timeStart,

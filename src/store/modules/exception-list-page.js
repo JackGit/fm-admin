@@ -33,8 +33,9 @@ export default {
   },
 
   actions: {
-    async fetchPageData ({ commit, state, dispatch }) {
+    async fetchPageData ({ commit, state, rootState, dispatch }) {
       const request = {
+        projectId: rootState.currentProject._id,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd
       }
@@ -47,8 +48,9 @@ export default {
       commit('setExceptionList', response[0])
       commit('setTypesStatsInfo', response[1])
     },
-    async getFrequencyStatsInfo ({ commit, state }) {
+    async getFrequencyStatsInfo ({ commit, state, rootState }) {
       const response = await statsFrequency({
+        projectId: rootState.currentProject._id,
         timeStart: state.timeStart,
         timeEnd: state.timeEnd,
         interval: state.interval
