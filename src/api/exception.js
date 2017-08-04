@@ -8,12 +8,13 @@ export async function getDetails (objectId) {
   })
 }
 
-export async function getList ({ projectId, timeStart, timeEnd, limit }) {
+export async function getList ({ projectId, timeStart, timeEnd, limit = 100 }) {
   return http.get('/exceptions', {
     params: {
       projectId,
       from: timeStart.getTime(),
       end: timeEnd.getTime(),
+      fields: 'type,message,stack,pageUrl,createdAt',
       limit
     }
   }).then(({ data }) => {
