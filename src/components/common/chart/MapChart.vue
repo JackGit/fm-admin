@@ -48,7 +48,7 @@ function createMapChart (el, mapData) {
       },
       name: 'Location Distribution',
       tooltip: {
-        pointFormat: '{point.key}次'
+        pointFormat: '{point.key}: {point.value}次访问'
       }
     }]
   })
