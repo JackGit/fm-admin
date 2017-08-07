@@ -5,7 +5,7 @@
       <div class="c-exceptionListItem" v-for="exception in exceptions" @click="handleClick(exception)">
         <i class="el-icon-warning c-exceptionListItem__icon" style="color: red"></i>
         <div>
-          <span class="c-exceptionListItem__type">{{exception.name}}</span>
+          <span class="c-exceptionListItem__type">{{exception.type}}</span>
           <span class="c-exceptionListItem__url c-url">{{exception.pageUrl}}</span>
         </div>
         <div>
