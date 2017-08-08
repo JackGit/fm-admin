@@ -1,6 +1,6 @@
 $(function () {
-  getUserInfo()
   errorAjaxDemoRequest()
+  getUserInfo()
 })
 
 function errorAjaxDemoRequest () {
