@@ -37,7 +37,7 @@ export default {
       exceptionDetails: state => state.exceptionDetails
     }),
     exceptionForm () {
-      const { pageUrl, name, message, stack, createdAt } = this.exceptionDetails
+      const { pageUrl, type, message, stack, createdAt } = this.exceptionDetails
 
       return [{
         label: 'Page URL',
@@ -49,7 +49,7 @@ export default {
         value: stack.length > 0 && stack[stack.length - 1].url
       }, {
         label: 'Type',
-        value: name
+        value: type
       }, {
         label: 'Description',
         value: message
